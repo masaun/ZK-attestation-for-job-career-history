@@ -3,14 +3,14 @@ mod data_types; // data_types.nr
 mod converters; // converters.nr -> converters/convert_cid_to_poseidon_hash.nr -> convert_nft_metadata_cid_to_poseidon_hash()
 
 use std::hash::poseidon2;
-//use std::hash::pedersen_commitment;
+use std::hash::pedersen_hash;
 use std::merkle::compute_merkle_root;
 
 use data_types::{ IPNftData, RevealedData }; // @dev - IPNftData struct
 
 
 fn main(
-    root: pub Field,        // @dev - Merkle Root: 
+    expected_merkle_root_of_job_title_commitment_merkle_tree: pub Field,        // @dev - Merkle Root of the job title commitment tree.
     hash_path: [Field; 2],  // @dev - Merkle Path: The Merkle path proving the credential is in the attestation tree.
     //merkle_path: [Field; 32],
     leaf: Field,            // @dev - Merkle Leaf: The hash of the candidate's attested credential.
@@ -37,25 +37,34 @@ fn main(
 
     // Ensure disclosed commitments match inputs
     let inputs_for_note_commitment: [Field; 1] = [secret];
-    let note_commitment = poseidon2::Poseidon2::hash(inputs_for_note_commitment, inputs_for_note_commitment.len());
+    let note_commitment = pedersen_hash(inputs_for_note_commitment);
 
     let inputs_for_job_title_commitment: [Field; 1] = [job_title_hash];
-    let job_title_commitment: Field = poseidon2::Poseidon2::hash(inputs_for_job_title_commitment, inputs_for_job_title_commitment.len());
+    let job_title_commitment: Field = pedersen_hash(inputs_for_job_title_commitment);
     assert(job_title_commitment == expected_job_title_commitment);
 
     for i in 0..5 {
         let inputs_for_skill_commitment: [Field; 1] = [skill_hashes[i]];
-        let skill_commitment: Field = poseidon2::Poseidon2::hash(inputs_for_skill_commitment, inputs_for_skill_commitment.len());
+        let skill_commitment: Field = pedersen_hash(inputs_for_skill_commitment);
         assert(skill_commitment == expected_skill_commitments[i]);
+
+        let merkle_root_of_skill_commitment_merkle_tree = std::merkle::compute_merkle_root(skill_commitment, index, hash_path); // [NOTE]: Each "job_title_commitment" will be a "Leaf" of the "Markle Tree" of "job_title_commitment" hashes.
     }
 
+    // Compute a Merkle Root /w "commitnent hash" + Constraint: nullifier (hash) == expected_nullifier (hash)
+    let merkle_root_of_job_title_commitment_merkle_tree = std::merkle::compute_merkle_root(job_title_commitment, index, hash_path); // [NOTE]: Each "job_title_commitment" will be a "Leaf" of the "Markle Tree" of "job_title_commitment" hashes.
+    assert(merkle_root_of_job_title_commitment_merkle_tree == expected_merkle_root_of_job_title_commitment_merkle_tree);
 
+    // Constraint: nullifier (hash) == expected_nullifier (hash)
+    let inputs_for_nullifier: [Field; 5] = [merkle_root_of_job_title_commitment_merkle_tree, secret, job_title_commitment, skill_hashes[0], skill_hashes[1]];
+    let nullifier = poseidon2::Poseidon2::hash(inputs_for_nullifier, inputs_for_nullifier.len());
+    println(nullifier);
 
-    // let nullifier = std::hash::pedersen_hash([root, secret, proposalId]);
+    assert(nullifier == expected_nullifier);
 
-    // let check_root = std::merkle::compute_merkle_root(note_commitment, index, hash_path);
-    // assert(root == check_root);
     
+
+
 
 
     // Convert a IPFS CID (sha256) -> bytes -> Field -> Poseidon2 Hash
@@ -65,19 +74,6 @@ fn main(
 
     // Constraint: nft_metadata_cid_hash == expected_nft_metadata_hash
     assert(nft_metadata_cid_hash == expected_nft_metadata_cid_hash);
-
-    println(expected_nullifier); // [Log]: 0x1265c921cb8e0dc6c91f70ae08b14352b8f10451aee7582b9ed44abea8d4123c
-
-    let inputs_for_note_commitment: [Field; 1] = [secret];
-    let note_commitment = poseidon2::Poseidon2::hash(inputs_for_note_commitment, inputs_for_note_commitment.len());
-
-    //let inputs_for_nullifier: [Field; 1] = [ip_nft_data.nft_token_id];
-    let inputs_for_nullifier: [Field; 5] = [root, secret, ip_nft_data.nft_owner, ip_nft_data.nft_token_id, expected_nft_metadata_cid_hash];
-    let nullifier = poseidon2::Poseidon2::hash(inputs_for_nullifier, inputs_for_nullifier.len());
-    println(nullifier);
-
-    // Constraint: nullifier (hash) == expected_nullifier (hash)
-    assert(nullifier == expected_nullifier);
 
     //nullifier
     //(nullifier, nft_metadata_cid_hash)
