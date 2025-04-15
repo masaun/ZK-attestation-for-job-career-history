@@ -72,5 +72,7 @@ fn main(
     RevealedData {
         nullifier,
         nft_metadata_cid_hash,
+        job_title_commitment,
+        skill_commitments
     }
 }
