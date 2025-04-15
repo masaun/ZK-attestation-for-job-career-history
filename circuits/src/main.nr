@@ -10,7 +10,8 @@ use data_types::{ IPNftData, RevealedData }; // @dev - IPNftData struct
 
 
 fn main(
-    expected_merkle_root_of_job_title_commitment_merkle_tree: pub Field,        // @dev - Merkle Root of the job title commitment tree.
+    expected_merkle_root_of_job_title_commitment_merkle_tree: pub Field,   // @dev - Merkle Root of the job title commitment tree.
+    expected_merkle_root_of_skill_commitments_merkle_tree: pub [Field; 5], // @dev - Merkle Root of the skill commitment tree.
     hash_path: [Field; 2],  // @dev - Merkle Path: The Merkle path proving the credential is in the attestation tree.
     //merkle_path: [Field; 32],
     leaf: Field,            // @dev - Merkle Leaf: The hash of the candidate's attested credential.
@@ -49,6 +50,7 @@ fn main(
         assert(skill_commitment == expected_skill_commitments[i]);
 
         let merkle_root_of_skill_commitment_merkle_tree = std::merkle::compute_merkle_root(skill_commitment, index, hash_path); // [NOTE]: Each "job_title_commitment" will be a "Leaf" of the "Markle Tree" of "job_title_commitment" hashes.
+        assert(merkle_root_of_skill_commitment_merkle_tree == expected_merkle_root_of_skill_commitments_merkle_tree[i]);
     }
 
     // Compute a Merkle Root /w "commitnent hash" + Constraint: nullifier (hash) == expected_nullifier (hash)
