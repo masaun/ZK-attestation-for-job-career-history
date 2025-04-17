@@ -8,9 +8,22 @@ mod tests {
 
     #[test]
     fn test_nft_metadata_verifier() {
-        let root: Field = 0x215597bacd9c7e977dfc170f320074155de974be494579d2586e5b268fa3b629;   // @dev - Merkle Root
+        let expected_merkle_root_of_job_title_commitment_merkle_tree: Field = 0x215597bacd9c7e977dfc170f320074155de974be494579d2586e5b268fa3b629;   // @dev - Merkle Root of the job title commitment tree.
+        let expected_merkle_root_of_skill_commitments_merkle_tree: [Field; 5] = [ // @dev - Merkle Root of the skill commitment tree.
+            0x215597bacd9c7e977dfc170f320074155de974be494579d2586e5b268fa3b629,
+            0x215597bacd9c7e977dfc170f320074155de974be494579d2586e5b268fa3b629,
+            0x215597bacd9c7e977dfc170f320074155de974be494579d2586e5b268fa3b629,
+            0x215597bacd9c7e977dfc170f320074155de974be494579d2586e5b268fa3b629,
+            0x215597bacd9c7e977dfc170f320074155de974be494579d2586e5b268fa3b629
+        ];
+        //let root: Field = 0x215597bacd9c7e977dfc170f320074155de974be494579d2586e5b268fa3b629;   // @dev - Merkle Root
+
         let hash_path: [Field; 2] = [0x1efa9d6bb4dfdf86063cc77efdec90eb9262079230f1898049efad264835b6c8, 0x2a653551d87767c545a2a11b29f0581a392b4e177a87c8e3eb425c51a26a8c77];
-        let index: Field = 0;
+
+        let index_of_job_title_commitment_merkle_tree: Field = 0;           // @dev - Position in the tree.
+        let index_of_skill_commitments_merkle_tree: [Field; 5] = [0, 1, 2, 3, 4];           // @dev - Position in the tree.
+        //let index: Field = 0;
+
         let secret: Field = 1;
 
         let ip_nft_data: IPNftData = IPNftData {
@@ -26,18 +39,46 @@ mod tests {
 
         //let expected_nullifier: Field = 0x168758332d5b3e2d13be8048c8011b454590e06c44bce7f702f09103eef5a373;          // @dev - Successful (NOTE: This is equal to Field(10190015755989328289879378487807721086446093622177241109507523918927702106995) in Noir)
         //let expected_nullifier: Field = 10190015755989328289879378487807721086446093622177241109507523918927702106995; // @dev - Same with the "hash" in the output.json
-        let expected_nullifier = poseidon2::Poseidon2::hash([root, secret, ip_nft_data.nft_owner, ip_nft_data.nft_token_id, expected_nft_metadata_cid_hash], 5);
+        let expected_nullifier = poseidon2::Poseidon2::hash([expected_merkle_root_of_job_title_commitment_merkle_tree, secret, ip_nft_data.nft_owner, ip_nft_data.nft_token_id, expected_nft_metadata_cid_hash], 5);
+        //let expected_nullifier = poseidon2::Poseidon2::hash([root, secret, ip_nft_data.nft_owner, ip_nft_data.nft_token_id, expected_nft_metadata_cid_hash], 5);
         println(expected_nullifier); // [Log]: 0x168758332d5b3e2d13be8048c8011b454590e06c44bce7f702f09103eef5a373
+
+        // @dev - Career historical data and Skills data
+        let job_title_hash: Field = 0x00000000000000000000000070997970c51812dc3a010c7d01b50e0d17dc79c8;     // @dev - Hash of the job title (e.g. Hashed "Software Engineer").
+        let skill_hashes: [Field; 5] = [   // @dev - List of skill hashes (e.g. Hashed ["Rust", "ZK", "React"]).
+            0x00000000000000000000000070997970c51812dc3a010c7d01b50e0d17dc79c8,
+            0x0d76959f68406fde33752accbb712a425e9dc101b1ea4db5e3f9f9d0fb8bcd6e,
+            0x20476c92bde69215bc26b1c58e4871eeb662e03c426767e4c603d9df7ecf630f,
+            0x1306d71bfd84cac61cdfc548510f1877a9b00270355ba593aa85b24696efcb1e,
+            0x1306d71bfd84cac61cdfc548510f1877a9b00270355ba593aa85b24696efcb1e
+        ];
+        let expected_job_title_commitment: Field = 0x00000000000000000000000070997970c51812dc3a010c7d01b50e0d17dc79c8;   // @dev - Commitment Hash of the job title to reveal (can be nullified if redacting).
+        let expected_skill_commitments: [Field; 5] = [   // @dev - Commitment Hashes of the revealed skills.
+            0x00000000000000000000000070997970c51812dc3a010c7d01b50e0d17dc79c8,
+            0x0d76959f68406fde33752accbb712a425e9dc101b1ea4db5e3f9f9d0fb8bcd6e,
+            0x20476c92bde69215bc26b1c58e4871eeb662e03c426767e4c603d9df7ecf630f,
+            0x1306d71bfd84cac61cdfc548510f1877a9b00270355ba593aa85b24696efcb1e,
+            0x1306d71bfd84cac61cdfc548510f1877a9b00270355ba593aa85b24696efcb1e
+        ];
+
 
         //let nullifier = main(
         let revealed_data: RevealedData = main(
-            root,
+            expected_merkle_root_of_job_title_commitment_merkle_tree,
+            expected_merkle_root_of_skill_commitments_merkle_tree,
+            //root,
             hash_path,
-            index,
+            index_of_job_title_commitment_merkle_tree,
+            index_of_skill_commitments_merkle_tree,
+            //index,
             secret,
             expected_nullifier,
             expected_nft_metadata_cid_hash, 
-            ip_nft_data
+            ip_nft_data,
+            job_title_hash,
+            skill_hashes,
+            expected_job_title_commitment,
+            expected_skill_commitments
         );
         println(revealed_data.nullifier); // [Log]: 
         println(revealed_data.nft_metadata_cid_hash); // [Log]: 
@@ -48,7 +89,8 @@ mod tests {
         let note_commitment = poseidon2::Poseidon2::hash(inputs_for_note_commitment, inputs_for_note_commitment.len());
 
         //let inputs_for_nullifier: [Field; 1] = [ip_nft_data.nft_token_id];
-        let inputs_for_nullifier: [Field; 5] = [root, secret, ip_nft_data.nft_owner, ip_nft_data.nft_token_id, revealed_data.nft_metadata_cid_hash];
+        let inputs_for_nullifier: [Field; 5] = [expected_merkle_root_of_job_title_commitment_merkle_tree, secret, ip_nft_data.nft_owner, ip_nft_data.nft_token_id, revealed_data.nft_metadata_cid_hash];
+        //let inputs_for_nullifier: [Field; 5] = [root, secret, ip_nft_data.nft_owner, ip_nft_data.nft_token_id, revealed_data.nft_metadata_cid_hash];
         let _nullifier = poseidon2::Poseidon2::hash(inputs_for_nullifier, inputs_for_nullifier.len());
         println(_nullifier); // [Log]: 0x168758332d5b3e2d13be8048c8011b454590e06c44bce7f702f09103eef5a373
 
