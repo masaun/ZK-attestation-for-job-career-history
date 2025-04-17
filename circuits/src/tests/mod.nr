@@ -10,12 +10,12 @@ mod tests {
 
     #[test]
     fn test_nft_metadata_verifier() {
-        let expected_merkle_root_of_job_title_commitment_merkle_tree: Field = 0x215597bacd9c7e977dfc170f320074155de974be494579d2586e5b268fa3b629;   // @dev - Merkle Root of the job title commitment tree.
+        let expected_merkle_root_of_job_title_commitment_merkle_tree: Field = 0x0756df15fbc4f023c7a837fd3b6b71a2e53b6cc3197b702a764b9701ed89c424;   // @dev - Merkle Root of the job title commitment tree.
         let expected_merkle_root_of_skill_commitments_merkle_tree: [Field; 5] = [ // @dev - Merkle Root of the skill commitment tree.
-            0x215597bacd9c7e977dfc170f320074155de974be494579d2586e5b268fa3b629,
-            0x215597bacd9c7e977dfc170f320074155de974be494579d2586e5b268fa3b629,
-            0x215597bacd9c7e977dfc170f320074155de974be494579d2586e5b268fa3b629,
-            0x215597bacd9c7e977dfc170f320074155de974be494579d2586e5b268fa3b629,
+            0x00000000000000000000000070997970c51812dc3a010c7d01b50e0d17dc79c8,
+            0x0d76959f68406fde33752accbb712a425e9dc101b1ea4db5e3f9f9d0fb8bcd6e,
+            0x20476c92bde69215bc26b1c58e4871eeb662e03c426767e4c603d9df7ecf630f,
+            0x1306d71bfd84cac61cdfc548510f1877a9b00270355ba593aa85b24696efcb1e,
             0x215597bacd9c7e977dfc170f320074155de974be494579d2586e5b268fa3b629
         ];
         //let root: Field = 0x215597bacd9c7e977dfc170f320074155de974be494579d2586e5b268fa3b629;   // @dev - Merkle Root
@@ -46,14 +46,16 @@ mod tests {
         println(f"expected_nullifier: {expected_nullifier}"); // [Log]: 0x168758332d5b3e2d13be8048c8011b454590e06c44bce7f702f09103eef5a373
 
         // @dev - Career historical data and Skills data
-        let job_title_hash: Field = 0x00000000000000000000000070997970c51812dc3a010c7d01b50e0d17dc79c8;     // @dev - Hash of the job title (e.g. Hashed "Software Engineer").
+        let job_title_hash: Field = 0x1efa9d6bb4dfdf86063cc77efdec90eb9262079230f1898049efad264835b6c8;     // @dev - Hash of the job title (e.g. Hashed "Software Engineer").
         let skill_hashes: [Field; 5] = [   // @dev - List of skill hashes (e.g. Hashed ["Rust", "ZK", "React"]).
-            0x00000000000000000000000070997970c51812dc3a010c7d01b50e0d17dc79c8,
+            0x1efa9d6bb4dfdf86063cc77efdec90eb9262079230f1898049efad264835b6c8,
             0x0d76959f68406fde33752accbb712a425e9dc101b1ea4db5e3f9f9d0fb8bcd6e,
             0x20476c92bde69215bc26b1c58e4871eeb662e03c426767e4c603d9df7ecf630f,
             0x1306d71bfd84cac61cdfc548510f1877a9b00270355ba593aa85b24696efcb1e,
-            0x1306d71bfd84cac61cdfc548510f1877a9b00270355ba593aa85b24696efcb1e
+            0x215597bacd9c7e977dfc170f320074155de974be494579d2586e5b268fa3b629
         ];
+        //println(f"skill_hashes: {skill_hashes}");
+        println(f"skill_hashes: {skill_hashes}"); 
 
         let expected_job_title_commitment: Field = pedersen_hash([job_title_hash]);   // @dev - Commitment Hash of the job title to reveal (can be nullified if redacting).
         let expected_skill_commitments: [Field; 5] = [   // @dev - Commitment Hashes of the revealed skills.
@@ -68,8 +70,9 @@ mod tests {
             let inputs_for_skill_commitment: [Field; 1] = [skill_hashes[i]];
             let skill_commitment: Field = pedersen_hash(inputs_for_skill_commitment);
             //assert(skill_commitment == expected_skill_commitments[i]);
+            let index: Field = index_of_skill_commitments_merkle_tree[i];
 
-            let merkle_root_of_skill_commitment_merkle_tree = std::merkle::compute_merkle_root(skill_commitment, index_of_skill_commitments_merkle_tree[i], hash_path); // [NOTE]: Each "job_title_commitment" will be a "Leaf" of the "Markle Tree" of "job_title_commitment" hashes.
+            let merkle_root_of_skill_commitment_merkle_tree = std::merkle::compute_merkle_root(skill_commitment, index, hash_path); // [NOTE]: Each "job_title_commitment" will be a "Leaf" of the "Markle Tree" of "job_title_commitment" hashes.
             //assert(merkle_root_of_skill_commitment_merkle_tree == expected_merkle_root_of_skill_commitments_merkle_tree[i]);
             println(f"merkle_root_of_skill_commitment_merkle_tree: {merkle_root_of_skill_commitment_merkle_tree}");
             //println(merkle_root_of_skill_commitment_merkle_tree);
