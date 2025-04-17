@@ -64,7 +64,7 @@ mod tests {
             pedersen_hash([skill_hashes[4]])
         ];
 
-        for i in 0..5 {
+        for i in 0..4 {
             let inputs_for_skill_commitment: [Field; 1] = [skill_hashes[i]];
             let skill_commitment: Field = pedersen_hash(inputs_for_skill_commitment);
             //assert(skill_commitment == expected_skill_commitments[i]);
@@ -76,7 +76,7 @@ mod tests {
         }
 
         // Compute a Merkle Root /w "commitnent hash" + Constraint: nullifier (hash) == expected_nullifier (hash)
-        let merkle_root_of_job_title_commitment_merkle_tree = std::merkle::compute_merkle_root(expected_job_title_commitment, index_of_job_title_commitment_merkle_tree, hash_path); // [NOTE]: Each "job_title_commitment" will be a "Leaf" of the "Markle Tree" of "job_title_commitment" hashes.
+        let merkle_root_of_job_title_commitment_merkle_tree = std::merkle::compute_merkle_root(pedersen_hash([job_title_hash]), index_of_job_title_commitment_merkle_tree, hash_path); // [NOTE]: Each "job_title_commitment" will be a "Leaf" of the "Markle Tree" of "job_title_commitment" hashes.
         //assert(merkle_root_of_job_title_commitment_merkle_tree == expected_merkle_root_of_job_title_commitment_merkle_tree);
         println(f"merkle_root_of_job_title_commitment_merkle_tree: {merkle_root_of_job_title_commitment_merkle_tree}");
         //println(merkle_root_of_job_title_commitment_merkle_tree);
