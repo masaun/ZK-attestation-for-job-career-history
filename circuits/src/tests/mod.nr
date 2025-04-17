@@ -43,7 +43,7 @@ mod tests {
         //let expected_nullifier: Field = 10190015755989328289879378487807721086446093622177241109507523918927702106995; // @dev - Same with the "hash" in the output.json
         let expected_nullifier = poseidon2::Poseidon2::hash([expected_merkle_root_of_job_title_commitment_merkle_tree, secret, ip_nft_data.nft_owner, ip_nft_data.nft_token_id, expected_nft_metadata_cid_hash], 5);
         //let expected_nullifier = poseidon2::Poseidon2::hash([root, secret, ip_nft_data.nft_owner, ip_nft_data.nft_token_id, expected_nft_metadata_cid_hash], 5);
-        println(expected_nullifier); // [Log]: 0x168758332d5b3e2d13be8048c8011b454590e06c44bce7f702f09103eef5a373
+        println(f"expected_nullifier: {expected_nullifier}"); // [Log]: 0x168758332d5b3e2d13be8048c8011b454590e06c44bce7f702f09103eef5a373
 
         // @dev - Career historical data and Skills data
         let job_title_hash: Field = 0x00000000000000000000000070997970c51812dc3a010c7d01b50e0d17dc79c8;     // @dev - Hash of the job title (e.g. Hashed "Software Engineer").
@@ -64,6 +64,22 @@ mod tests {
             pedersen_hash([skill_hashes[4]])
         ];
 
+        for i in 0..5 {
+            let inputs_for_skill_commitment: [Field; 1] = [skill_hashes[i]];
+            let skill_commitment: Field = pedersen_hash(inputs_for_skill_commitment);
+            //assert(skill_commitment == expected_skill_commitments[i]);
+
+            let merkle_root_of_skill_commitment_merkle_tree = std::merkle::compute_merkle_root(skill_commitment, index_of_skill_commitments_merkle_tree[i], hash_path); // [NOTE]: Each "job_title_commitment" will be a "Leaf" of the "Markle Tree" of "job_title_commitment" hashes.
+            //assert(merkle_root_of_skill_commitment_merkle_tree == expected_merkle_root_of_skill_commitments_merkle_tree[i]);
+            println(f"merkle_root_of_skill_commitment_merkle_tree: {merkle_root_of_skill_commitment_merkle_tree}");
+            //println(merkle_root_of_skill_commitment_merkle_tree);
+        }
+
+        // Compute a Merkle Root /w "commitnent hash" + Constraint: nullifier (hash) == expected_nullifier (hash)
+        let merkle_root_of_job_title_commitment_merkle_tree = std::merkle::compute_merkle_root(expected_job_title_commitment, index_of_job_title_commitment_merkle_tree, hash_path); // [NOTE]: Each "job_title_commitment" will be a "Leaf" of the "Markle Tree" of "job_title_commitment" hashes.
+        //assert(merkle_root_of_job_title_commitment_merkle_tree == expected_merkle_root_of_job_title_commitment_merkle_tree);
+        println(f"merkle_root_of_job_title_commitment_merkle_tree: {merkle_root_of_job_title_commitment_merkle_tree}");
+        //println(merkle_root_of_job_title_commitment_merkle_tree);
 
         //let nullifier = main(
         let revealed_data: RevealedData = main(
