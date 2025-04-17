@@ -5,6 +5,8 @@ mod tests {
     use crate::data_types::{ IPNftData, RevealedData };  // src/data_types.nr
     use crate::converters;             // src/converters.nr -> converters/convert_cid_to_poseidon_hash.nr -> convert_nft_metadata_cid_to_poseidon_hash()
     use std::hash::poseidon2;
+    use std::hash::pedersen_hash;
+    use std::merkle::compute_merkle_root;
 
     #[test]
     fn test_nft_metadata_verifier() {
@@ -52,13 +54,14 @@ mod tests {
             0x1306d71bfd84cac61cdfc548510f1877a9b00270355ba593aa85b24696efcb1e,
             0x1306d71bfd84cac61cdfc548510f1877a9b00270355ba593aa85b24696efcb1e
         ];
-        let expected_job_title_commitment: Field = 0x00000000000000000000000070997970c51812dc3a010c7d01b50e0d17dc79c8;   // @dev - Commitment Hash of the job title to reveal (can be nullified if redacting).
+
+        let expected_job_title_commitment: Field = pedersen_hash([job_title_hash]);   // @dev - Commitment Hash of the job title to reveal (can be nullified if redacting).
         let expected_skill_commitments: [Field; 5] = [   // @dev - Commitment Hashes of the revealed skills.
-            0x00000000000000000000000070997970c51812dc3a010c7d01b50e0d17dc79c8,
-            0x0d76959f68406fde33752accbb712a425e9dc101b1ea4db5e3f9f9d0fb8bcd6e,
-            0x20476c92bde69215bc26b1c58e4871eeb662e03c426767e4c603d9df7ecf630f,
-            0x1306d71bfd84cac61cdfc548510f1877a9b00270355ba593aa85b24696efcb1e,
-            0x1306d71bfd84cac61cdfc548510f1877a9b00270355ba593aa85b24696efcb1e
+            pedersen_hash([skill_hashes[0]]),
+            pedersen_hash([skill_hashes[1]]),
+            pedersen_hash([skill_hashes[2]]),
+            pedersen_hash([skill_hashes[3]]),
+            pedersen_hash([skill_hashes[4]])
         ];
 
 
