@@ -66,7 +66,7 @@ mod tests {
             pedersen_hash([skill_hashes[4]])
         ];
 
-        for i in 0..4 {
+        for i in 0..5 {
             let inputs_for_skill_commitment: [Field; 1] = [skill_hashes[i]];
             let skill_commitment: Field = pedersen_hash(inputs_for_skill_commitment);
             //assert(skill_commitment == expected_skill_commitments[i]);
