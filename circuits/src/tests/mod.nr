@@ -10,7 +10,7 @@ mod tests {
 
     #[test]
     fn test_nft_metadata_verifier() {
-        let expected_merkle_root_of_job_title_commitment_merkle_tree: Field = 0x0756df15fbc4f023c7a837fd3b6b71a2e53b6cc3197b702a764b9701ed89c424;   // @dev - Merkle Root of the job title commitment tree.
+        let expected_merkle_root_of_job_title_commitment_merkle_tree: Field = 0x029dcc49e2c9a0d3c077f9f615247460b4e13d8f4d8b8a3d4dc9040f16bf266e;   // @dev - Merkle Root of the job title commitment tree.
         let expected_merkle_root_of_skill_commitments_merkle_tree: [Field; 4] = [ // @dev - Merkle Root of the skill commitment tree.
             0x00000000000000000000000070997970c51812dc3a010c7d01b50e0d17dc79c8,
             0x0d76959f68406fde33752accbb712a425e9dc101b1ea4db5e3f9f9d0fb8bcd6e,
@@ -38,11 +38,6 @@ mod tests {
         let expected_nft_metadata_cid_hash: Field = converters::converter_module::convert_nft_metadata_cid_to_poseidon_hash(nft_metadata_cid);
         println(expected_nft_metadata_cid_hash); // [Log]: 0x0c863c512eaa011ffa5d0f8b8cfe26c5dfa6c0e102a4594a3e40af8f68d86dd0
 
-        //let expected_nullifier: Field = 0x168758332d5b3e2d13be8048c8011b454590e06c44bce7f702f09103eef5a373;          // @dev - Successful (NOTE: This is equal to Field(10190015755989328289879378487807721086446093622177241109507523918927702106995) in Noir)
-        //let expected_nullifier: Field = 10190015755989328289879378487807721086446093622177241109507523918927702106995; // @dev - Same with the "hash" in the output.json
-        let expected_nullifier = poseidon2::Poseidon2::hash([expected_merkle_root_of_job_title_commitment_merkle_tree, secret, ip_nft_data.nft_owner, ip_nft_data.nft_token_id, expected_nft_metadata_cid_hash], 5);
-        //let expected_nullifier = poseidon2::Poseidon2::hash([root, secret, ip_nft_data.nft_owner, ip_nft_data.nft_token_id, expected_nft_metadata_cid_hash], 5);
-        println(f"expected_nullifier: {expected_nullifier}"); // [Log]: 0x168758332d5b3e2d13be8048c8011b454590e06c44bce7f702f09103eef5a373
 
         // @dev - Career historical data and Skills data
         let job_title_hash: Field = 0x1efa9d6bb4dfdf86063cc77efdec90eb9262079230f1898049efad264835b6c8;     // @dev - Hash of the job title (e.g. Hashed "Software Engineer").
@@ -64,6 +59,10 @@ mod tests {
         ];
 
         println(expected_skill_commitments.len()); // [Log]: 4
+
+        let inputs_for_nullifier: [Field; 5] = [expected_merkle_root_of_job_title_commitment_merkle_tree, secret, expected_job_title_commitment, skill_hashes[0], skill_hashes[1]];
+        let expected_nullifier = poseidon2::Poseidon2::hash(inputs_for_nullifier, inputs_for_nullifier.len());
+        println(f"expected_nullifier: {expected_nullifier}"); // [Log]: 0x168758332d5b3e2d13be8048c8011b454590e06c44bce7f702f09103eef5a373
 
         for i in 0..4 { // @dev - In case of "0..5", index "5" is not included in the range
             println(f"i: {i}"); // [Log]: 0x1efa9d6bb4dfdf86063cc77efdec90eb9262079230f1898049efad264835b6c8
@@ -111,10 +110,9 @@ mod tests {
         let inputs_for_note_commitment: [Field; 1] = [secret];
         let note_commitment = poseidon2::Poseidon2::hash(inputs_for_note_commitment, inputs_for_note_commitment.len());
 
-        //let inputs_for_nullifier: [Field; 1] = [ip_nft_data.nft_token_id];
-        let inputs_for_nullifier: [Field; 5] = [expected_merkle_root_of_job_title_commitment_merkle_tree, secret, ip_nft_data.nft_owner, ip_nft_data.nft_token_id, revealed_data.nft_metadata_cid_hash];
-        //let inputs_for_nullifier: [Field; 5] = [root, secret, ip_nft_data.nft_owner, ip_nft_data.nft_token_id, revealed_data.nft_metadata_cid_hash];
-        let _nullifier = poseidon2::Poseidon2::hash(inputs_for_nullifier, inputs_for_nullifier.len());
+
+        let _inputs_for_nullifier: [Field; 5] = [expected_merkle_root_of_job_title_commitment_merkle_tree, secret, expected_job_title_commitment, skill_hashes[0], skill_hashes[1]];
+        let _nullifier = poseidon2::Poseidon2::hash(_inputs_for_nullifier, _inputs_for_nullifier.len());
         println(_nullifier); // [Log]: 0x168758332d5b3e2d13be8048c8011b454590e06c44bce7f702f09103eef5a373
 
         // Constraint check
