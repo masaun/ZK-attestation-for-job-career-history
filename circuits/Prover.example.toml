@@ -6,7 +6,7 @@ secret = ""                # @dev - A hidden metadata hash (private)
 expected_nullifier = ""    # @dev - Should be a Poseidon2 Hash
 expected_nft_metadata_cid_hash = "" # @dev - Should be a Poseidon2 Hash
 
-[ip_nft_data]
+[job_career_and_skill_data]
 nft_owner = ""
 nft_token_id = ""
 nft_metadata_cid = ""      # @dev - IPFS CID, which is not hashed yet. (i.e. "QmYwAPJzv5CZsnAzt8auVZRn5W4mBkpLsD4HaBFN6r5y6F")
@@ -16,7 +16,7 @@ nft_metadata_cid = ""      # @dev - IPFS CID, which is not hashed yet. (i.e. "Qm
 # hash_path: [Field; 2],
 # index: Field,
 # secret: Field,   // @dev - A hidden metadata hash (private)
-# ip_nft_data: IPNftData
+# job_career_and_skill_data: IPNftData
 
 # pub struct IPNftData {
 #     nft_owner: Field,

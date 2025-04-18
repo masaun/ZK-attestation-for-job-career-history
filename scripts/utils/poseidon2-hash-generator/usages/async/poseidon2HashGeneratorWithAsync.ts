@@ -38,9 +38,9 @@ function getInputData(input_data: any) {
 
   const root = BigInt(input_data.root);
   const secret = BigInt(input_data.secret);
-  const nft_owner = BigInt(input_data.ip_nft_data.nft_owner);
-  const nft_token_id = BigInt(input_data.ip_nft_data.nft_token_id);
-  const nft_metadata_cid = String(input_data.ip_nft_data.nft_metadata_cid);
+  const nft_owner = BigInt(input_data.job_career_and_skill_data.nft_owner);
+  const nft_token_id = BigInt(input_data.job_career_and_skill_data.nft_token_id);
+  const nft_metadata_cid = String(input_data.job_career_and_skill_data.nft_metadata_cid);
   //const root = BigInt(0x215597bacd9c7e977dfc170f320074155de974be494579d2586e5b268fa3b629);
   //const secret = BigInt(1);
   //const nft_owner = BigInt(0xC6093Fd9cc143F9f058938868b2df2daF9A91d28);

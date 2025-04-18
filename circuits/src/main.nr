@@ -6,7 +6,7 @@ use std::hash::poseidon2;
 use std::hash::pedersen_hash;
 use std::merkle::compute_merkle_root;
 
-use data_types::{ IPNftData, RevealedData }; // @dev - IPNftData struct
+use data_types::{ JobCareerAndSkillData, RevealedData }; // @dev - IPNftData struct
 
 
 fn main(
@@ -19,14 +19,7 @@ fn main(
     index_of_skill_commitments_merkle_tree: [Field; 4],           // @dev - Position in the tree.
     secret: Field,          // @dev - A hidden metadata hash (private)
     expected_nullifier: Field,
-    expected_nft_metadata_cid_hash: Field,
-    ip_nft_data: IPNftData,
-
-    // @dev - Career historical data and Skills data
-    job_title_hash: Field,     // @dev - Hash of the job title (e.g. Hashed "Software Engineer").
-    skill_hashes: [Field; 4],  // @dev - List of skill hashes (e.g. Hashed ["Rust", "ZK", "React"]).
-    expected_job_title_commitment: pub Field,   // @dev - Commitment Hash of the job title to reveal (can be nullified if redacting).
-    expected_skill_commitments: pub [Field; 4], // @dev - Commitment Hashes of the revealed skills.
+    job_career_and_skill_data: JobCareerAndSkillData
 ) -> pub RevealedData {
 
     // Ensure leaf encodes job title and skills
@@ -37,19 +30,19 @@ fn main(
     let inputs_for_note_commitment: [Field; 1] = [secret];
     let note_commitment = pedersen_hash(inputs_for_note_commitment);
 
-    let inputs_for_job_title_commitment: [Field; 1] = [job_title_hash];
+    let inputs_for_job_title_commitment: [Field; 1] = [job_career_and_skill_data.job_title_hash];
     let job_title_commitment: Field = pedersen_hash(inputs_for_job_title_commitment);
-    assert(job_title_commitment == expected_job_title_commitment);
+    assert(job_title_commitment == job_career_and_skill_data.expected_job_title_commitment);
 
     let skill_commitments: [Field; 4] = [
-        pedersen_hash([skill_hashes[0]]),
-        pedersen_hash([skill_hashes[1]]),
-        pedersen_hash([skill_hashes[2]]),
-        pedersen_hash([skill_hashes[3]])
+        pedersen_hash([job_career_and_skill_data.skill_hashes[0]]),
+        pedersen_hash([job_career_and_skill_data.skill_hashes[1]]),
+        pedersen_hash([job_career_and_skill_data.skill_hashes[2]]),
+        pedersen_hash([job_career_and_skill_data.skill_hashes[3]])
     ];
     
     for i in 0..4 { // @dev - In case of "0..5", index "5" is not included in the range
-        let inputs_for_skill_commitment: [Field; 1] = [skill_hashes[i]];
+        let inputs_for_skill_commitment: [Field; 1] = [job_career_and_skill_data.skill_hashes[i]];
         let skill_commitment: Field = pedersen_hash(inputs_for_skill_commitment);
         //assert(skill_commitment == expected_skill_commitments[i]);
 
@@ -65,30 +58,23 @@ fn main(
     // assert(computed_root == root);
 
     // Constraint: nullifier (hash) == expected_nullifier (hash)
-    let inputs_for_nullifier: [Field; 5] = [merkle_root_of_job_title_commitment_merkle_tree, secret, job_title_commitment, skill_hashes[0], skill_hashes[1]];
+    let inputs_for_nullifier: [Field; 5] = [
+        merkle_root_of_job_title_commitment_merkle_tree, 
+        secret, 
+        job_title_commitment, 
+        job_career_and_skill_data.skill_hashes[0], 
+        job_career_and_skill_data.skill_hashes[1]
+    ];
+    
     let nullifier = poseidon2::Poseidon2::hash(inputs_for_nullifier, inputs_for_nullifier.len());
     println(nullifier);
 
     assert(nullifier == expected_nullifier);
 
-    
-
-
-
-
-    // Convert a IPFS CID (sha256) -> bytes -> Field -> Poseidon2 Hash
-    //let nft_metadata_cid: str<46> = "QmYwAPJzv5CZsnAzt8auVZRn5W4mBkpLsD4HaBFN6r5y6F";
-    let nft_metadata_cid_hash: Field = converters::converter_module::convert_nft_metadata_cid_to_poseidon_hash(ip_nft_data.nft_metadata_cid);
-    println(nft_metadata_cid_hash); // [Log]: 0x0c863c512eaa011ffa5d0f8b8cfe26c5dfa6c0e102a4594a3e40af8f68d86dd0
-
-    // Constraint: nft_metadata_cid_hash == expected_nft_metadata_hash
-    assert(nft_metadata_cid_hash == expected_nft_metadata_cid_hash);
-
     //nullifier
     //(nullifier, nft_metadata_cid_hash)
     RevealedData {
         nullifier,
-        nft_metadata_cid_hash,
         job_title_commitment,
         skill_commitments
     }
