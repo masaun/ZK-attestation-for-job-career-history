@@ -1,25 +1,13 @@
-# return = ""
-root = ""                  # @dev - Merkle Root
+merkle_root_of_job_title_commitment_merkle_tree = ""             # @dev - Merkle Root of the job title commitment tree.
+merkle_root_of_skill_commitments_merkle_tree = ["", "", "", ""]  # @dev - Merkle Root of the skill commitment tree.
 hash_path = ["", ""]
-index = ""
-secret = ""                # @dev - A hidden metadata hash (private)
-expected_nullifier = ""    # @dev - Should be a Poseidon2 Hash
-expected_nft_metadata_cid_hash = "" # @dev - Should be a Poseidon2 Hash
+index_of_job_title_commitment_merkle_tree = ""                   # @dev - Position in the tree.
+index_of_skill_commitments_merkle_tree = ["", "", "", ""]        # @dev - Position in the tree.
+secret = ""       # @dev - A hidden metadata hash (private)
+nullifier = ""    # @dev - Should be a Poseidon2 Hash
 
 [job_career_and_skill_data]
-nft_owner = ""
-nft_token_id = ""
-nft_metadata_cid = ""      # @dev - IPFS CID, which is not hashed yet. (i.e. "QmYwAPJzv5CZsnAzt8auVZRn5W4mBkpLsD4HaBFN6r5y6F")
-#nft_metadata_hash = ""
-
-# root: pub Field, // @dev - Merkle Root
-# hash_path: [Field; 2],
-# index: Field,
-# secret: Field,   // @dev - A hidden metadata hash (private)
-# job_career_and_skill_data: IPNftData
-
-# pub struct IPNftData {
-#     nft_owner: Field,
-#     nft_token_id: Field,
-#     nft_metadata_hash: Field  // IPFS CID for the metadata of NFT, which is generated when uploading to IPFS.
-# }
+job_title_hash = "";                    # @dev - Hash of the job title (e.g. Hashed "Software Engineer").
+skill_hashes = ["", "", "", ""]         # @dev - List of skill hashes (e.g. Hashed ["Rust", "ZK", "React"]).
+job_title_commitment = "";              # @dev - Commitment Hash of the job title to reveal (can be nullified if redacting).
+skill_commitments = ["", "", "", ""]    # @dev - Commitment Hashes of the revealed skills.

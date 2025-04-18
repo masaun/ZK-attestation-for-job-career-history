@@ -9,7 +9,7 @@ mod tests {
     use std::merkle::compute_merkle_root;
 
     #[test]
-    fn test_nft_metadata_verifier() {
+    fn test_job_titles_and_skills_verifier() {
         let merkle_root_of_job_title_commitment_merkle_tree: Field = 0x029dcc49e2c9a0d3c077f9f615247460b4e13d8f4d8b8a3d4dc9040f16bf266e;   // @dev - Merkle Root of the job title commitment tree.
         let merkle_root_of_skill_commitments_merkle_tree: [Field; 4] = [ // @dev - Merkle Root of the skill commitment tree.
             0x00000000000000000000000070997970c51812dc3a010c7d01b50e0d17dc79c8,
@@ -65,6 +65,7 @@ mod tests {
             job_title_commitment: _job_title_commitment,
             skill_commitments: _skill_commitments
         };
+        println(f"job_career_and_skill_data: {job_career_and_skill_data}");
 
         for i in 0..4 { // @dev - In case of "0..5", index "5" is not included in the range
             println(f"i: {i}"); // [Log]: 0x1efa9d6bb4dfdf86063cc77efdec90eb9262079230f1898049efad264835b6c8
