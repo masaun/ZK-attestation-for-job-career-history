@@ -9,5 +9,5 @@ pub struct RevealedData {
     nullifier: Field,
     nft_metadata_cid_hash: Field,
     job_title_commitment: Field,
-    skill_commitments: [Field; 5]
+    skill_commitments: [Field; 4]
 }
