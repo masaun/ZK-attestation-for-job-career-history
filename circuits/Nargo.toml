@@ -1,5 +1,5 @@
 [package]
-name="with_foundry"
+name="job_titles_and_skills"
 type="bin"
 authors = ["critesjosh"]
 compiler_version = ">=0.31.0"
