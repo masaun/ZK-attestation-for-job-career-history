@@ -10,8 +10,8 @@ mod tests {
 
     #[test]
     fn test_nft_metadata_verifier() {
-        let expected_merkle_root_of_job_title_commitment_merkle_tree: Field = 0x029dcc49e2c9a0d3c077f9f615247460b4e13d8f4d8b8a3d4dc9040f16bf266e;   // @dev - Merkle Root of the job title commitment tree.
-        let expected_merkle_root_of_skill_commitments_merkle_tree: [Field; 4] = [ // @dev - Merkle Root of the skill commitment tree.
+        let merkle_root_of_job_title_commitment_merkle_tree: Field = 0x029dcc49e2c9a0d3c077f9f615247460b4e13d8f4d8b8a3d4dc9040f16bf266e;   // @dev - Merkle Root of the job title commitment tree.
+        let merkle_root_of_skill_commitments_merkle_tree: [Field; 4] = [ // @dev - Merkle Root of the skill commitment tree.
             0x00000000000000000000000070997970c51812dc3a010c7d01b50e0d17dc79c8,
             0x0d76959f68406fde33752accbb712a425e9dc101b1ea4db5e3f9f9d0fb8bcd6e,
             0x20476c92bde69215bc26b1c58e4871eeb662e03c426767e4c603d9df7ecf630f,
@@ -27,12 +27,6 @@ mod tests {
 
         let secret: Field = 1;
 
-        // Convert a IPFS CID (sha256) -> bytes -> Field -> Poseidon2 Hash
-        let nft_metadata_cid: str<46> = "QmYwAPJzv5CZsnAzt8auVZRn5W4mBkpLsD4HaBFN6r5y6F";
-        let expected_nft_metadata_cid_hash: Field = converters::converter_module::convert_nft_metadata_cid_to_poseidon_hash(nft_metadata_cid);
-        println(expected_nft_metadata_cid_hash); // [Log]: 0x0c863c512eaa011ffa5d0f8b8cfe26c5dfa6c0e102a4594a3e40af8f68d86dd0
-
-
         // @dev - Career historical data and Skills data
         let _job_title_hash: Field = 0x1efa9d6bb4dfdf86063cc77efdec90eb9262079230f1898049efad264835b6c8;     // @dev - Hash of the job title (e.g. Hashed "Software Engineer").
         let _skill_hashes: [Field; 4] = [   // @dev - List of skill hashes (e.g. Hashed ["Rust", "ZK", "React"]).
@@ -44,20 +38,20 @@ mod tests {
         //println(f"skill_hashes: {skill_hashes}");
         println(f"_skill_hashes: {_skill_hashes}"); 
 
-        let _expected_job_title_commitment: Field = pedersen_hash([_job_title_hash]);   // @dev - Commitment Hash of the job title to reveal (can be nullified if redacting).
-        let _expected_skill_commitments: [Field; 4] = [   // @dev - Commitment Hashes of the revealed skills.
+        let _job_title_commitment: Field = pedersen_hash([_job_title_hash]);   // @dev - Commitment Hash of the job title to reveal (can be nullified if redacting).
+        let _skill_commitments: [Field; 4] = [   // @dev - Commitment Hashes of the revealed skills.
             pedersen_hash([_skill_hashes[0]]),
             pedersen_hash([_skill_hashes[1]]),
             pedersen_hash([_skill_hashes[2]]),
             pedersen_hash([_skill_hashes[3]])
         ];
 
-        println(f"_expected_skill_commitments.len(): {_expected_skill_commitments.len()}"); // [Log]: 4
+        println(f"_skill_commitments.len(): {_skill_commitments.len()}"); // [Log]: 4
 
         let inputs_for_nullifier: [Field; 5] = [
-            expected_merkle_root_of_job_title_commitment_merkle_tree, 
+            merkle_root_of_job_title_commitment_merkle_tree, 
             secret, 
-            _expected_job_title_commitment, 
+            _job_title_commitment, 
             _skill_hashes[0], 
             _skill_hashes[1]
         ];
@@ -68,8 +62,8 @@ mod tests {
         let job_career_and_skill_data: JobCareerAndSkillData = JobCareerAndSkillData {
             job_title_hash: _job_title_hash,
             skill_hashes: _skill_hashes,
-            expected_job_title_commitment: _expected_job_title_commitment,
-            expected_skill_commitments: _expected_skill_commitments
+            job_title_commitment: _job_title_commitment,
+            skill_commitments: _skill_commitments
         };
 
         for i in 0..4 { // @dev - In case of "0..5", index "5" is not included in the range
@@ -94,8 +88,8 @@ mod tests {
 
         //let nullifier = main(
         let revealed_data: RevealedData = main(
-            expected_merkle_root_of_job_title_commitment_merkle_tree,
-            expected_merkle_root_of_skill_commitments_merkle_tree,
+            merkle_root_of_job_title_commitment_merkle_tree,
+            merkle_root_of_skill_commitments_merkle_tree,
             //root,
             hash_path,
             index_of_job_title_commitment_merkle_tree,
@@ -112,9 +106,9 @@ mod tests {
 
 
         let _inputs_for_nullifier: [Field; 5] = [
-            expected_merkle_root_of_job_title_commitment_merkle_tree, 
+            merkle_root_of_job_title_commitment_merkle_tree, 
             secret, 
-            _expected_job_title_commitment, 
+            revealed_data.job_title_commitment, 
             _skill_hashes[0], 
             _skill_hashes[1]
         ];
