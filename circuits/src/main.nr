@@ -12,12 +12,12 @@ use data_types::{ JobCareerAndSkillData, RevealedData }; // @dev - IPNftData str
 fn main(
     merkle_root_of_job_title_commitment_merkle_tree: pub Field,   // @dev - Merkle Root of the job title commitment tree.
     merkle_root_of_skill_commitments_merkle_tree: pub [Field; 4], // @dev - Merkle Root of the skill commitment tree.
-    hash_path: [Field; 2],  // @dev - Merkle Path: The Merkle path proving the credential is in the attestation tree.
+    hash_path: [Field; 2],                                        // @dev - Merkle Path: The Merkle path proving the credential is in the attestation tree.
     //merkle_path: [Field; 32],
-    //leaf: Field,          // @dev - Merkle Leaf: The hash of the candidate's attested credential. -> This may not be needed because each commitment will be used as each "Leaf"
-    index_of_job_title_commitment_merkle_tree: Field,           // @dev - Position in the tree.
+    //leaf: Field,                                                // @dev - Merkle Leaf: The hash of the candidate's attested credential. -> This may not be needed because each commitment will be used as each "Leaf"
+    index_of_job_title_commitment_merkle_tree: Field,             // @dev - Position in the tree.
     index_of_skill_commitments_merkle_tree: [Field; 4],           // @dev - Position in the tree.
-    secret: Field,          // @dev - A hidden metadata hash (private)
+    secret: Field,                                                // @dev - A hidden metadata hash (private)
     nullifier: Field,
     job_career_and_skill_data: JobCareerAndSkillData
 ) -> pub RevealedData {
