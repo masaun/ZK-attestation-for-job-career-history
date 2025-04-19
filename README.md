@@ -1,4 +1,4 @@
-# 【IN PROGRESS】ZK attestation for `Job Career History` and `Skills` on Pharos (Devnet)
+# 【IN PROGRESS】ZK attestation for `Job Career History` and `Skills`
 
 ## Tech Stack
 
