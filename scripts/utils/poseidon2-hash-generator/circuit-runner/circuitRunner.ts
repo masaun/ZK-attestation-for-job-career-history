@@ -63,8 +63,8 @@ async function getCircuit(name: string): Promise<CompiledCircuit> {
       //expected_nullifier: "0x168758332d5b3e2d13be8048c8011b454590e06c44bce7f702f09103eef5a373"
       expected_nft_metadata_cid_hash: "0x0c863c512eaa011ffa5d0f8b8cfe26c5dfa6c0e102a4594a3e40af8f68d86dd0",
 
-      //[ip_nft_data]
-      ip_nft_data: {
+      //[job_career_and_skill_data]
+      job_career_and_skill_data: {
         nft_owner: "0xC6093Fd9cc143F9f058938868b2df2daF9A91d28",
         nft_token_id: "1",
         nft_metadata_cid: "QmYwAPJzv5CZsnAzt8auVZRn5W4mBkpLsD4HaBFN6r5y6F"
@@ -73,5 +73,5 @@ async function getCircuit(name: string): Promise<CompiledCircuit> {
     }
   
     return input_data;
-    //return { root, hash_path, index, secret, expected_nullifier, ip_nft_data };
+    //return { root, hash_path, index, secret, expected_nullifier, job_career_and_skill_data };
   }

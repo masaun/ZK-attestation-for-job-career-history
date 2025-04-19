@@ -37,7 +37,7 @@ contract StarterTest is Test {
                   .withInput("secret", bytes32(uint256(1)))                   
                   .withInput("expected_nullifier", bytes32(uint256(0x26df0d347e961cb94e1cc6d2ad8558696de8c1964b30e26f2ec8b926cbbbf862)))
                   .withInput("expected_nft_metadata_cid_hash", bytes32(uint256(0x0c863c512eaa011ffa5d0f8b8cfe26c5dfa6c0e102a4594a3e40af8f68d86dd0)))
-                  .withStruct("ip_nft_data")
+                  .withStruct("job_career_and_skill_data")
                   .withStructInput("nft_owner", bytes32(uint256(uint160(0xC6093Fd9cc143F9f058938868b2df2daF9A91d28)))) // [NOTE]: An input data of 'Address' type must be cast to uint160 first. Then, it should be cast to uint256 and bytes32.
                   .withStructInput("nft_token_id", bytes32(uint256(1)))
                   .withStructInput("nft_metadata_cid", string('QmYwAPJzv5CZsnAzt8auVZRn5W4mBkpLsD4HaBFN6r5y6F'));
@@ -69,7 +69,7 @@ contract StarterTest is Test {
                   .withInput("secret", bytes32(uint256(1)))                   
                   .withInput("expected_nullifier", bytes32(uint256(0x26df0d347e961cb94e1cc6d2ad8558696de8c1964b30e26f2ec8b926cbbbf862)))
                   .withInput("expected_nft_metadata_cid_hash", bytes32(uint256(0x0c863c512eaa011ffa5d0f8b8cfe26c5dfa6c0e102a4594a3e40af8f68d86dd0)))
-                  .withStruct("ip_nft_data")
+                  .withStruct("job_career_and_skill_data")
                   .withStructInput("nft_owner", bytes32(uint256(uint160(0xC6093Fd9cc143F9f058938868b2df2daF9A91d28)))) // [NOTE]: An input data of 'Address' type must be cast to uint160 first. Then, it should be cast to uint256 and bytes32.
                   .withStructInput("nft_token_id", bytes32(uint256(1)))
                   .withStructInput("nft_metadata_cid", string('QmYwAPJzv5CZsnAzt8auVZRn5W4mBkpLsD4HaBFN6r5y6F'));
