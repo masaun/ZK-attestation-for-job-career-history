@@ -1,6 +1,6 @@
 mod tests;      // tests/mod.nr
 mod data_types; // data_types.nr
-mod converters; // converters.nr -> converters/convert_cid_to_poseidon_hash.nr -> convert_nft_metadata_cid_to_poseidon_hash()
+mod utils; // converters.nr -> converters/convert_cid_to_poseidon_hash.nr -> convert_nft_metadata_cid_to_poseidon_hash()
 
 use std::hash::poseidon2;
 use std::hash::pedersen_hash;
