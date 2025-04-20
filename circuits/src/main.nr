@@ -1,6 +1,6 @@
 mod tests;      // tests/mod.nr
 mod data_types; // data_types.nr
-mod utils; // converters.nr -> converters/convert_cid_to_poseidon_hash.nr -> convert_nft_metadata_cid_to_poseidon_hash()
+mod utils;      // utils.nr -> utils/convert_cid_to_poseidon_hash.nr -> convert_nft_metadata_cid_to_poseidon_hash()
 
 use std::hash::poseidon2;
 use std::hash::pedersen_hash;
@@ -44,15 +44,15 @@ fn main(
     for i in 0..4 { // @dev - In case of "0..5", index "5" is not included in the range
         let inputs_for_skill_commitment: [Field; 1] = [job_career_and_skill_data.skill_hashes[i]];
         let expected_skill_commitment: Field = pedersen_hash(inputs_for_skill_commitment);
-        //assert(skill_commitment == expected_skill_commitments[i]);
+        assert(expected_skill_commitment == skill_commitments[i]);
 
         let expected_merkle_root_of_skill_commitment_merkle_tree = std::merkle::compute_merkle_root(expected_skill_commitment, index_of_skill_commitments_merkle_tree[i], hash_path); // [NOTE]: Each "job_title_commitment" will be a "Leaf" of the "Markle Tree" of "job_title_commitment" hashes.
-        //assert(merkle_root_of_skill_commitment_merkle_tree == expected_merkle_root_of_skill_commitments_merkle_tree[i]);
+        assert(expected_merkle_root_of_skill_commitment_merkle_tree == merkle_root_of_skill_commitments_merkle_tree[i]);
     }
 
     // Compute a Merkle Root /w "commitnent hash" + Constraint: nullifier (hash) == expected_nullifier (hash)
     let expected_merkle_root_of_job_title_commitment_merkle_tree = std::merkle::compute_merkle_root(job_title_commitment, index_of_job_title_commitment_merkle_tree, hash_path); // [NOTE]: Each "job_title_commitment" will be a "Leaf" of the "Markle Tree" of "job_title_commitment" hashes.
-    //assert(merkle_root_of_job_title_commitment_merkle_tree == expected_merkle_root_of_job_title_commitment_merkle_tree);
+    assert(merkle_root_of_job_title_commitment_merkle_tree == expected_merkle_root_of_job_title_commitment_merkle_tree);
 
     // let computed_root = compute_merkle_root(leaf, index, hash_path);
     // assert(computed_root == root);

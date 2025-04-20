@@ -3,7 +3,7 @@ mod test_inputs; // test_inputs.nr
 mod tests {
     use crate::main;                   // src/main.nr
     use crate::data_types::{ JobCareerAndSkillData, RevealedData };  // src/data_types.nr
-    use crate::utils;             // src/converters.nr -> converters/convert_cid_to_poseidon_hash.nr -> convert_nft_metadata_cid_to_poseidon_hash()
+    use crate::utils;                  // src/utils.nr -> utils/convert_cid_to_poseidon_hash.nr -> convert_nft_metadata_cid_to_poseidon_hash()
     use std::hash::poseidon2;
     use std::hash::pedersen_hash;
     use std::merkle::compute_merkle_root;
