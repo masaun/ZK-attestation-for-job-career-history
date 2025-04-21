@@ -11,12 +11,12 @@ use data_types::{ JobCareerAndSkillData, RevealedData }; // @dev - IPNftData str
 
 fn main(
     merkle_root_of_job_title_commitment_merkle_tree: pub Field,   // @dev - Merkle Root of the job title commitment tree.
-    merkle_root_of_skill_commitments_merkle_tree: pub [Field; 4], // @dev - Merkle Root of the skill commitment tree.
+    merkle_root_of_skills_combined_commitment_merkle_tree: pub Field, // @dev - Merkle Root of the skill commitment tree.
     hash_path: [Field; 2],                                        // @dev - Merkle Path: The Merkle path proving the credential is in the attestation tree.
     //merkle_path: [Field; 32],
     //leaf: Field,                                                // @dev - Merkle Leaf: The hash of the candidate's attested credential. -> This may not be needed because each commitment will be used as each "Leaf"
     index_of_job_title_commitment_merkle_tree: Field,             // @dev - Position in the tree.
-    index_of_skill_commitments_merkle_tree: [Field; 4],           // @dev - Position in the tree.
+    index_of_skills_combined_commitments_merkle_tree: Field,      // @dev - Position in the tree.
     secret: Field,                                                // [TODO]: To be removed
     nullifier: Field,
     job_career_and_skill_data: JobCareerAndSkillData
@@ -37,13 +37,18 @@ fn main(
     let skills_combined_commitment: Field = pedersen_hash([skills_combined_hash, secret]);
     assert(skills_combined_commitment == job_career_and_skill_data.skills_combined_commitment);
 
-    // Compute a Merkle Root /w "commitnent hash" + Constraint: nullifier (hash) == expected_nullifier (hash)
+    // Compute a Merkle Root of job_title_commitment tree /w "commitnent hash"
     let expected_merkle_root_of_job_title_commitment_merkle_tree = std::merkle::compute_merkle_root(job_title_commitment, index_of_job_title_commitment_merkle_tree, hash_path); // [NOTE]: Each "job_title_commitment" will be a "Leaf" of the "Markle Tree" of "job_title_commitment" hashes.
     assert(merkle_root_of_job_title_commitment_merkle_tree == expected_merkle_root_of_job_title_commitment_merkle_tree);
 
+    // Compute a Merkle Root of skills_combined_commitment tree  /w "commitnent hash"
+    let expected_merkle_root_of_skills_combined_commitment_merkle_tree = std::merkle::compute_merkle_root(skills_combined_commitment, index_of_skills_combined_commitments_merkle_tree, hash_path); // [NOTE]: Each "job_title_commitment" will be a "Leaf" of the "Markle Tree" of "job_title_commitment" hashes.
+    assert(merkle_root_of_skills_combined_commitment_merkle_tree == expected_merkle_root_of_skills_combined_commitment_merkle_tree);
+
     // Constraint: nullifier (hash) == expected_nullifier (hash)
-    let inputs_for_nullifier: [Field; 4] = [
+    let inputs_for_nullifier: [Field; 5] = [
         merkle_root_of_job_title_commitment_merkle_tree, 
+        merkle_root_of_skills_combined_commitment_merkle_tree,
         secret, 
         job_title_commitment, 
         skills_combined_commitment
