@@ -6,7 +6,8 @@ use std::hash::poseidon2;
 use std::hash::pedersen_hash;
 use std::merkle::compute_merkle_root;
 
-use data_types::{ JobCareerAndSkillData, RevealedData }; // @dev - IPNftData struct
+use utils::merkle_tree_generator::generate_merkle_tree_with_depth_1; // @dev - generate_merkle_tree_with_depth_1() function
+use data_types::{ JobCareerAndSkillData, RevealedData };             // @dev - IPNftData struct
 
 
 fn main(
@@ -36,6 +37,10 @@ fn main(
     let skills_combined_hash: Field = pedersen_hash(inputs_for_skill_hashes);
     let skills_combined_commitment: Field = pedersen_hash([skills_combined_hash, secret]);
     assert(skills_combined_commitment == job_career_and_skill_data.skills_combined_commitment);
+
+    // @dev - Generate a Merkle tree with a depth of 1
+    let expected_root = generate_merkle_tree_with_depth_1(job_title_commitment, skills_combined_commitment);
+    println(f"expected_root: {expected_root}");
 
     // Compute a Merkle Root of job_title_commitment tree /w "commitnent hash"
     let expected_merkle_root_of_job_title_commitment_merkle_tree = std::merkle::compute_merkle_root(job_title_commitment, index_of_job_title_commitment_merkle_tree, hash_path); // [NOTE]: Each "job_title_commitment" will be a "Leaf" of the "Markle Tree" of "job_title_commitment" hashes.
