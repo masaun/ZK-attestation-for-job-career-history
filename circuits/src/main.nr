@@ -26,12 +26,12 @@ fn main(
     //let leaf_reconstructed = poseidon2::Poseidon2::hash([job_title_hash, skill_hashes[0], skill_hashes[1]], 3); // NOTE: This hashing method is "Pedersen Hash"
     //assert(leaf == leaf_reconstructed);
 
-    // @dev - Job Title (Each "commitment" will be a "Leaf" of the "Markle Tree")
+    // @dev - Job Title commitment, which each "commitment" will be a "Leaf" of the Job Title commitment "Markle Tree"
     let inputs_for_job_title_commitment: [Field; 1] = [job_career_and_skill_data.job_title_hash];
     let job_title_commitment: Field = pedersen_hash([job_career_and_skill_data.job_title_hash, secret]);
     assert(job_title_commitment == job_career_and_skill_data.job_title_commitment);
 
-    // @dev - Skills (Each "commitment" will be a "Leaf" of the "Markle Tree")
+    // @dev - Skills combined commitment, which each "commitment" will be a "Leaf" of the Skills combined commitment "Markle Tree"
     let inputs_for_skill_hashes: [Field; 4] = job_career_and_skill_data.skill_hashes;
     let skills_combined_hash: Field = pedersen_hash(inputs_for_skill_hashes);
     let skills_combined_commitment: Field = pedersen_hash([skills_combined_hash, secret]);
@@ -56,11 +56,9 @@ fn main(
 
     let expected_nullifier = poseidon2::Poseidon2::hash(inputs_for_nullifier, inputs_for_nullifier.len());
     println(f"expected_nullifier: {expected_nullifier}");
-
     assert(nullifier == expected_nullifier);
 
-    //nullifier
-    //(nullifier, nft_metadata_cid_hash)
+    // @dev - Return the revealed data
     RevealedData {
         nullifier,
         job_title_commitment,
