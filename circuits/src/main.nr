@@ -11,7 +11,7 @@ use data_types::{ JobCareerAndSkillData, RevealedData };             // @dev - J
 
 
 fn main(
-    merkle_root: pub Field,                                      // @dev - Merkle Root of the attestation tree.
+    merkle_root: pub Field,                                         // @dev - Merkle Root, which is consist of both a job_title_commitment and a _skills_combined_commitment
     //merkle_root_of_job_title_commitment_merkle_tree: pub Field,   // @dev - Merkle Root of the job title commitment tree.
     //merkle_root_of_skills_combined_commitment_merkle_tree: pub Field, // @dev - Merkle Root of the skill commitment tree.
     hash_path: [Field; 2],                                        // @dev - Merkle Path: The Merkle path proving the credential is in the attestation tree.

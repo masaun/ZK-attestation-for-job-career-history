@@ -30,14 +30,13 @@ mod tests {
             0x20476c92bde69215bc26b1c58e4871eeb662e03c426767e4c603d9df7ecf630f,
             0x1306d71bfd84cac61cdfc548510f1877a9b00270355ba593aa85b24696efcb1e
         ];
-        //println(f"skill_hashes: {skill_hashes}");
+        println(f"_job_title_hash: {_job_title_hash}"); 
         println(f"_skill_hashes: {_skill_hashes}"); 
 
         let _job_title_commitment: Field = pedersen_hash([_job_title_hash, secret]);   // @dev - Commitment Hash of the job title to reveal (can be nullified if redacting).
-        println(f"_job_title_commitment: {_job_title_commitment}"); 
-
         let _skills_combined_hash: Field = pedersen_hash(_skill_hashes);
         let _skills_combined_commitment: Field = pedersen_hash([_skills_combined_hash, secret]);
+        println(f"_job_title_commitment: {_job_title_commitment}"); 
         println(f"_skills_combined_commitment: {_skills_combined_commitment}"); 
 
         // @dev - Generate a Merkle tree with a depth of 1
