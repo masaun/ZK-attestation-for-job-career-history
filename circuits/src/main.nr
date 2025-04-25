@@ -19,6 +19,7 @@ fn main(
     //leaf: Field,                                                // @dev - Merkle Leaf: The hash of the candidate's attested credential. -> This may not be needed because each commitment will be used as each "Leaf"
     //index_of_job_title_commitment_merkle_tree: Field,             // @dev - Position in the tree.
     //index_of_skills_combined_commitments_merkle_tree: Field,      // @dev - Position in the tree.
+    //index: Field,
     secret: Field,                                                // [TODO]: To be removed
     nullifier: Field,
     job_career_and_skill_data: JobCareerAndSkillData
