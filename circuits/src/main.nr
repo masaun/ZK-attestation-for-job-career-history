@@ -7,7 +7,7 @@ use std::hash::pedersen_hash;
 use std::merkle::compute_merkle_root;
 
 use utils::merkle_tree_generator::generate_merkle_tree_with_depth_1; // @dev - generate_merkle_tree_with_depth_1() function
-use data_types::{ JobCareerAndSkillData, RevealedData };             // @dev - IPNftData struct
+use data_types::{ JobCareerAndSkillData, RevealedData };             // @dev - JobCareerAndSkillData, RevealedData struct
 
 
 fn main(
@@ -17,8 +17,8 @@ fn main(
     hash_path: [Field; 2],                                        // @dev - Merkle Path: The Merkle path proving the credential is in the attestation tree.
     //merkle_path: [Field; 32],
     //leaf: Field,                                                // @dev - Merkle Leaf: The hash of the candidate's attested credential. -> This may not be needed because each commitment will be used as each "Leaf"
-    index_of_job_title_commitment_merkle_tree: Field,             // @dev - Position in the tree.
-    index_of_skills_combined_commitments_merkle_tree: Field,      // @dev - Position in the tree.
+    //index_of_job_title_commitment_merkle_tree: Field,             // @dev - Position in the tree.
+    //index_of_skills_combined_commitments_merkle_tree: Field,      // @dev - Position in the tree.
     secret: Field,                                                // [TODO]: To be removed
     nullifier: Field,
     job_career_and_skill_data: JobCareerAndSkillData
