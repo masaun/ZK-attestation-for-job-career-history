@@ -99,14 +99,14 @@ sh ./scripts/pharos-testnet/runningScript_Verify_onPharosTestnet.sh
 <br>
 
 ## SC - Test
-- Run the `Starter.t.sol` on Local Network
+- Run the `JobTitlesAndSkillsProofVerifier.t.sol` on Local Network
 ```bash
-sh ./test/circuit/runningTest_Starter.sh
+sh ./test/circuit/runningTest_JobTitlesAndSkillsProofVerifier.sh
 ```
 
-- Run the `Starter_onPharosTestnet.t.sol` on Pharos (Devnet)
+- Run the `JobTitlesAndSkillsProofVerifier_onPharosTestnet.t.sol` on Pharos (Devnet)
 ```bash
-sh ./test/pharos-testnet/runningTest_Starter_onPharosTestnet.sh
+sh ./test/pharos-testnet/runningTest_JobTitlesAndSkillsProofVerifier_onPharosTestnet.sh
 ```
 
 
