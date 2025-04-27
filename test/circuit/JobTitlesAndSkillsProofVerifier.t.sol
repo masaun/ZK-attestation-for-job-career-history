@@ -50,7 +50,7 @@ contract JobTitlesAndSkillsProofVerifierTest is Test {
                   .withInput("secret", bytes32(uint256(1)))                   
                   .withInput("nullifier", bytes32(uint256(0x2257a91089fa22f5b5ccc3ac9b2478926b4114b62a7642c74c535d2a5f204c76)))
                   .withStruct("job_career_and_skill_data")
-                  .withStructInput("job_title_hash", bytes32(uint256(0x231cf0e55d8edded09899ecb8c17971efa152d0298aac59cb4383acdebcee12a)))
+                  .withStructInput("job_title_hash", bytes32(uint256(0x1efa9d6bb4dfdf86063cc77efdec90eb9262079230f1898049efad264835b6c8)))
                   .withStructInput("skill_hashes", skill_hashes_bytes32)
                   .withStructInput("job_title_commitment", bytes32(uint256(0x231cf0e55d8edded09899ecb8c17971efa152d0298aac59cb4383acdebcee12a)))
                   .withStructInput("skills_combined_commitment", bytes32(uint256(0x0cad87d2449640357fe35c04a31030834f023e777651ae1c82b01ab9afebdd1d)));
@@ -96,7 +96,7 @@ contract JobTitlesAndSkillsProofVerifierTest is Test {
                   .withInput("secret", bytes32(uint256(1)))                   
                   .withInput("nullifier", bytes32(uint256(0x2257a91089fa22f5b5ccc3ac9b2478926b4114b62a7642c74c535d2a5f204c76)))
                   .withStruct("job_career_and_skill_data")
-                  .withStructInput("job_title_hash", bytes32(uint256(0x1efa9d6bb4dfdf86063cc77efdec90eb9262079230f1898049efad26)))
+                  .withStructInput("job_title_hash", bytes32(uint256(0x1efa9d6bb4dfdf86063cc77efdec90eb9262079230f1898049efad264835b6c8)))
                   .withStructInput("skill_hashes", skill_hashes_bytes32)
                   .withStructInput("job_title_commitment", bytes32(uint256(0x231cf0e55d8edded09899ecb8c17971efa152d0298aac59cb4383acdebcee12a)))
                   .withStructInput("skills_combined_commitment", bytes32(uint256(0x0cad87d2449640357fe35c04a31030834f023e777651ae1c82b01ab9afebdd1d)));
