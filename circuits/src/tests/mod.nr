@@ -15,7 +15,10 @@ mod tests {
         //let merkle_root_of_job_title_commitment_merkle_tree: Field = 0x278cf9e26cf868e81bf990d0165f1aac2efa787813df392bd9379f56740cfb89;         // @dev - Merkle Root of the job_title commitment tree.
         //let merkle_root_of_skills_combined_commitment_merkle_tree: Field = 0x2d838863657606f9b3514548d2b7fa90526cf42e1692aef4b5ce00aab23af622;   // @dev - Merkle Root of the skills_combined commitment tree.
 
-        let hash_path: [Field; 2] = [0x1efa9d6bb4dfdf86063cc77efdec90eb9262079230f1898049efad264835b6c8, 0x2a653551d87767c545a2a11b29f0581a392b4e177a87c8e3eb425c51a26a8c77];
+        let hash_path: [Field; 2] = [
+            0x1efa9d6bb4dfdf86063cc77efdec90eb9262079230f1898049efad264835b6c8, 
+            0x2a653551d87767c545a2a11b29f0581a392b4e177a87c8e3eb425c51a26a8c77
+        ];
 
         //let index_of_job_title_commitment_merkle_tree: Field = 0;           // @dev - Position in the job_title_commitment tree.
         //let index_of_skills_combined_commitments_merkle_tree: Field = 0;    // @dev - Position in the skills_combined_commitment tree.
