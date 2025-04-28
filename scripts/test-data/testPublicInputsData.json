@@ -1,0 +1,6 @@
+{
+    "merkle_root": "0x28425d6e6583b1df3078b88954e9aadedfff45bde8a7b94bdf8fd0018f099550",
+    "nullifier": "0x2257a91089fa22f5b5ccc3ac9b2478926b4114b62a7642c74c535d2a5f204c76",
+    "job_title_commitment": "0x231cf0e55d8edded09899ecb8c17971efa152d0298aac59cb4383acdebcee12a",
+    "skills_combined_commitment": "0x0cad87d2449640357fe35c04a31030834f023e777651ae1c82b01ab9afebdd1d"
+}
