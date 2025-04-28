@@ -25,11 +25,10 @@ contract GetTestPublicInputsData is Script {
         bytes memory data = vm.parseJson(json);
         //console.logBytes(data);
 
-        string memory _hash = vm.parseJsonString(json, ".hash");
         bytes32 _merkleRoot = vm.parseJsonBytes32(json, ".merkle_root");
         bytes32 _nullifier = vm.parseJsonBytes32(json, ".nullifier");
-        bytes32 _jobTitleCommitment = vm.parseJsonBytes32(json, ".job_title_commitment");;
-        bytes32 _skillsCombinedCommitment = vm.parseJsonBytes32(json, ".skills_combined_commitment");;
+        bytes32 _jobTitleCommitment = vm.parseJsonBytes32(json, ".job_title_commitment");
+        bytes32 _skillsCombinedCommitment = vm.parseJsonBytes32(json, ".skills_combined_commitment");
         console.logBytes32(_merkleRoot);
         console.logBytes32(_nullifier);
         console.logBytes32(_jobTitleCommitment);

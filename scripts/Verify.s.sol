@@ -7,20 +7,21 @@ import { UltraVerifier } from "../contracts/circuit/ultra-verifier/plonk_vk.sol"
 //import "../circuits/target/contract.sol";
 import { JobTitlesAndSkillsProofVerifier } from "../contracts/circuit/JobTitlesAndSkillsProofVerifier.sol";
 import { ProofConverter } from "./utils/ProofConverter.sol";
+import { GetTestPublicInputsData } from "./test-data/GetTestPublicInputsData.sol";
 
 import { DataTypeConverter } from "../../contracts/libraries/DataTypeConverter.sol";
 
 
-contract VerifyScript is Script {
+contract VerifyScript is Script, GetTestPublicInputsData {
     JobTitlesAndSkillsProofVerifier public jobTitlesAndSkillsProofVerifier;
     UltraVerifier public verifier;
 
-    struct Poseidon2HashAndPublicInputs {
-        string hash; // Poseidon Hash of "nullifier"
-        bytes32 merkleRoot;
-        bytes32 nullifier;
-        bytes32 nftMetadataCidHash;
-    }
+    // struct PublicInputs {
+    //     bytes32 merkleRoot;
+    //     bytes32 nullifier;
+    //     bytes32 jobTitleCommitment;
+    //     bytes32 skillsCombinedCommitment;
+    // }
 
     function setUp() public {}
 
@@ -28,14 +29,16 @@ contract VerifyScript is Script {
         verifier = new UltraVerifier();
         jobTitlesAndSkillsProofVerifier = new JobTitlesAndSkillsProofVerifier(verifier);
 
-        // @dev - Retrieve the Poseidon2 hash and public inputs, which was read from the output.json file
-        Poseidon2HashAndPublicInputs memory poseidon2HashAndPublicInputs = computePoseidon2Hash();
-        bytes32 merkleRoot = poseidon2HashAndPublicInputs.merkleRoot;
-        bytes32 nullifierHash = poseidon2HashAndPublicInputs.nullifier;
-        bytes32 nftMetadataCidHash = poseidon2HashAndPublicInputs.nftMetadataCidHash;
-        console.logBytes32(merkleRoot);          // [Log]: 0x215597bacd9c7e977dfc170f320074155de974be494579d2586e5b268fa3b629
-        console.logBytes32(nullifierHash);       // [Log]: 0x26df0d347e961cb94e1cc6d2ad8558696de8c1964b30e26f2ec8b926cbbbf862
-        console.logBytes32(nftMetadataCidHash);  // [Log]: 0x0c863c512eaa011ffa5d0f8b8cfe26c5dfa6c0e102a4594a3e40af8f68d86dd0
+        // @dev - Retrieve the public inputs, which was read from the testPublicInputsData.json file
+        GetTestPublicInputsData.PublicInputs memory publicInputs = getTestPublicInputsData();
+        bytes32 merkleRoot = publicInputs.merkleRoot;
+        bytes32 nullifier = publicInputs.nullifier;
+        bytes32 jobTitleCommitment = publicInputs.jobTitleCommitment;
+        bytes32 skillsCombinedCommitment = publicInputs.skillsCombinedCommitment;
+        console.logBytes32(merkleRoot);
+        console.logBytes32(nullifier);
+        console.logBytes32(jobTitleCommitment);
+        console.logBytes32(skillsCombinedCommitment);
 
         bytes memory proof_w_inputs = vm.readFileBinary("./circuits/target/job_titles_and_skills_proof.bin");
         bytes memory proofBytes = ProofConverter.sliceAfter128Bytes(proof_w_inputs);    /// @dev - In case of that there are 4s public inputs (bytes32 * 4 = 128 bytes), the proof file includes 128 bytes of the public inputs at the beginning. Hence it should be removed by using this function.
@@ -45,11 +48,12 @@ contract VerifyScript is Script {
         // string memory proof = vm.readLine("./circuits/target/ip_nft_ownership_proof.bin");
         // bytes memory proofBytes = vm.parseBytes(proof);
 
-        bytes32[] memory correctPublicInputs = new bytes32[]();
+        bytes32[] memory correctPublicInputs = new bytes32[](4);
         correctPublicInputs[0] = merkleRoot;
-        correctPublicInputs[1] = nullifierHash;
-        correctPublicInputs[2] = nftMetadataCidHash;
-    
+        correctPublicInputs[1] = nullifier;
+        correctPublicInputs[2] = jobTitleCommitment;
+        correctPublicInputs[3] = skillsCombinedCommitment;
+
         bool isValidProof = jobTitlesAndSkillsProofVerifier.verifyJobTitlesAndSkillsProofVerifier(proofBytes, correctPublicInputs);
         require(isValidProof == true, "isValidProof should be true");
         console.logBool(isValidProof); // [Log]: true
