@@ -38,13 +38,14 @@ contract VerifyScript is Script {
         console.logBytes32(nftMetadataCidHash);  // [Log]: 0x0c863c512eaa011ffa5d0f8b8cfe26c5dfa6c0e102a4594a3e40af8f68d86dd0
 
         bytes memory proof_w_inputs = vm.readFileBinary("./circuits/target/job_titles_and_skills_proof.bin");
-        bytes memory proofBytes = ProofConverter.sliceAfter96Bytes(proof_w_inputs);    /// @dev - In case of that there are 3 public inputs (bytes32 * 3 = 96 bytes), the proof file includes 64 bytes of the public inputs at the beginning. Hence it should be removed by using this function.
+        bytes memory proofBytes = ProofConverter.sliceAfter128Bytes(proof_w_inputs);    /// @dev - In case of that there are 4s public inputs (bytes32 * 4 = 128 bytes), the proof file includes 128 bytes of the public inputs at the beginning. Hence it should be removed by using this function.
+        //bytes memory proofBytes = ProofConverter.sliceAfter96Bytes(proof_w_inputs);    /// @dev - In case of that there are 3 public inputs (bytes32 * 3 = 96 bytes), the proof file includes 96 bytes of the public inputs at the beginning. Hence it should be removed by using this function.
         //bytes memory proofBytes = ProofConverter.sliceAfter64Bytes(proof_w_inputs);  /// @dev - In case of that there are 2 public inputs (bytes32 * 2 = 64 bytes), the proof file includes 64 bytes of the public inputs at the beginning. Hence it should be removed by using this function.
 
         // string memory proof = vm.readLine("./circuits/target/ip_nft_ownership_proof.bin");
         // bytes memory proofBytes = vm.parseBytes(proof);
 
-        bytes32[] memory correctPublicInputs = new bytes32[](3);
+        bytes32[] memory correctPublicInputs = new bytes32[]();
         correctPublicInputs[0] = merkleRoot;
         correctPublicInputs[1] = nullifierHash;
         correctPublicInputs[2] = nftMetadataCidHash;
