@@ -1,3 +1,12 @@
+echo "Cleaning up temporary directories..."
+rm -rf ../../__tmp__test_verifyProof
+
+echo "Ensure temporary directories exist..."
+mkdir -p ../__tmp__test_verifyProof
+
+######################################################################
+
+
 echo "Load the environment variables from the .env file..."
 source .env
 #. ./.env
