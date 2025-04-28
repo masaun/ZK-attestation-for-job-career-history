@@ -21,8 +21,6 @@ contract JobTitlesAndSkillsProofVerifierTest is Test {
     }
 
     function test_verifyProof() public {
-        noirHelper.clean();
-
         // @dev - Store a hash_path into a bytes32 array.
         uint256[] memory hash_path = new uint256[](2);
         hash_path[0] = 0x1efa9d6bb4dfdf86063cc77efdec90eb9262079230f1898049efad264835b6c8;
