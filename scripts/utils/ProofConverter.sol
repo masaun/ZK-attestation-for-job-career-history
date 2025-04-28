@@ -30,4 +30,18 @@ library ProofConverter {
         }
         return result;
     }
+
+    /**
+     * @dev - Utility function, because the proof file includes the public inputs at the beginning
+     * @dev - In case of that there are 4 public inputs (bytes32 * 4 = 128 bytes), the proof file includes 128 bytes of the public inputs at the beginning. Hence it should be removed by using this function.
+     */
+    function sliceAfter128Bytes(bytes memory data) internal pure returns (bytes memory) {
+        uint256 length = data.length - 128;
+        bytes memory result = new bytes(data.length - 128);
+        for (uint i = 0; i < length; i++) {
+            result[i] = data[i + 128];
+        }
+        return result;
+    }
+
 }
