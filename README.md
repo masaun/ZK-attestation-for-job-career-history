@@ -115,7 +115,7 @@ sh ./test/pharos-testnet/runningTest_JobTitlesAndSkillsProofVerifier_onPharosTes
 ## Deployment
 - Run the `DeploymentAllContracts.s.sol`
 ```bash
-sh ./script/pharos-testnet/deployment/deploymentScript_AllContracts.sh
+sh ./scripts/pharos-testnet/deployment/deploymentScript_AllContracts.sh
 ```
 
 
