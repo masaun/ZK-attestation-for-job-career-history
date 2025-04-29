@@ -23,12 +23,12 @@ contract VerifyScript is Script, GetTestPublicInputsData {
     //     bytes32 skillsCombinedCommitment;
     // }
 
-    function setUp() public {}
-
-    function run() public returns (bool) {
+    function setUp() public {
         verifier = new UltraVerifier();
         jobTitlesAndSkillsProofVerifier = new JobTitlesAndSkillsProofVerifier(verifier);
+    }
 
+    function run() public returns (bool) {
         // @dev - Retrieve the public inputs, which was read from the testPublicInputsData.json file
         GetTestPublicInputsData.PublicInputs memory publicInputs = getTestPublicInputsData();
         bytes32 merkleRoot = publicInputs.merkleRoot;
