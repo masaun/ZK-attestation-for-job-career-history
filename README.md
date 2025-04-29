@@ -154,3 +154,6 @@ sh scripts/utils/poseidon2-hash-generator/usages/async/runningScript_poseidon2Ha
   - Pharos - Foundry ：https://docs.pharosnetwork.xyz/developer-guides/foundry
   - Pharos - SC in Rust /w Arbitrum's stylus_sdk & alloy：https://docs.pharosnetwork.xyz/developer-guides/rust/write-your-first-token
   - Network Info：https://docs.pharosnetwork.xyz/developer-guides/pharos-devnet-onboarding-guide#rpc-endpoint
+  - Block Explorer (BlockScout) on Pharos Testnet: https://pharosscan.xyz/  
+  - Fancet - To obtain Testnet ETH to pay for gas ⛽️ on Pharos Testnet (Devnet) 
+    https://www.hackquest.io/faucets/50002
