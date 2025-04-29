@@ -19,4 +19,4 @@ forge script scripts/pharos-testnet/deployment/DeploymentAllContracts.s.sol \
     --resume \
     --verify \
     --verifier blockscout \
-    --verifier-url https://pharosscan.xyz/
+    --verifier-url https://pharosscan.xyz/api/
