@@ -13,7 +13,8 @@ forge script scripts/pharos-testnet/deployment/DeploymentAllContracts.s.sol \
 
 echo "Verify the deployed-smart contracts (icl. UltraVerifier, JobTitlesAndSkillsProofVerifier) on Pharos Testnet Explorer..."
 forge script scripts/pharos-testnet/deployment/DeploymentAllContracts.s.sol \
-    --rpc-url ${PHAROS_TESTNET_BLOCK_EXPLORER_RPC} \
+    --rpc-url ${PHAROS_TESTNET_RPC} \
+    # --rpc-url ${PHAROS_TESTNET_BLOCK_EXPLORER_RPC} \
     --chain-id ${PHAROS_TESTNET_CHAIN_ID} \
     --private-key ${PHAROS_TESTNET_PRIVATE_KEY} \
     --resume \
