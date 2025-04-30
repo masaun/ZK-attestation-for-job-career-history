@@ -108,7 +108,7 @@ sh ./test/circuit/runningTest_JobTitlesAndSkillsProofVerifier.sh
 
 - Run the `JobTitlesAndSkillsProofVerifier_onPharosTestnet.t.sol` on Pharos (Devnet)
 ```bash
-sh ./test/pharos-testnet/runningTest_JobTitlesAndSkillsProofVerifier_onPharosTestnet.sh
+sh ./test/pharos-testnet/circuit/runningTest_JobTitlesAndSkillsProofVerifier_onPharosTestnet.sh
 ```
 
 
