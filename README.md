@@ -30,6 +30,8 @@
 
 | Contract Name | Descripttion | Deployed-contract addresses on `Pharos` (Testnet) | Contract Source Code Verified |
 | ------------- |:------------:|:--------------------------------------------------:|:-----------------------------:|
+| UltraVerifier | The UltraPlonk Verifer contract (`./contracts/circuit/ultra-verifier/plonk_vk.sol`), which is generated based on ZK circuit in Noir (`./circuits/src/main.nr`). FYI: To generated this contract, the way of the [Noir's Solidity Verifier generation](https://noir-lang.org/docs/how_to/how-to-solidity-verifier) was used. | [0x2317106a73E00fc66AB25aD50979CFf140075b2b](https://pharosscan.xyz/address/0x2317106a73E00fc66AB25aD50979CFf140075b2b) | Yet |
+| InsuranceClaimProofVerifier | The InsuranceClaimProofVerifier contract, which the validation using the UltraVerifier contract is implemented | [0x7a2E68d1d1bB79dBc945801A02Bd6e17d0842457](https://pharosscan.xyz/address/0x7a2E68d1d1bB79dBc945801A02Bd6e17d0842457) | Yet |
 
 <br>
 
