@@ -14,7 +14,7 @@
   - However, due to lack of validation method for recruiters and staff of HR department in companies to validate the `Job Carreer History` (i.e. `Job Title` and `Skills`), which is written in CV/Resume, malicious candidates can write a **fake** `Job Carreer History` in their CV/Resume. This is the problem of the **fake** CV/Resume in Job matching market.
   - This cause recruiters and staff of HR department in companies to misunderstand these malicious candidates, who submit a CV/Resume that includes fake `Job Carreer History`. In the worst case, these staff of HR department (or management team) in companies wrongly decide to hire these malicious candidates and this cause to mismatch and waste the cost and time to hire these malicious candidates.
 
-- This is where the **ZK (Zero-Knowledge) attestation for Job Career History** comes in. 
+- This is where the **ZK (Zero-Knowledge) attestation for Job Career History** protocol comes in. 
   - This protocol would enable to recruiters and HR staff of companies can send a job offer to a candidate without checking additional evidences (i.e. Employment offer letter, Diploma, Certificates, etc). This lead to being able to prevent malicious candidates from submitting their CV/Resume, which includes a **fake** Job Career History (i.e. `Job Title` and `Skills` etc).
 
   - This protocol would also enable a candidate to prove their Job Career History without submitting additional evidences, which may includes some sensitive informations.
