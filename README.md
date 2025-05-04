@@ -1,4 +1,4 @@
-# 【IN PROGRESS】ZK attestation for `Job Career History` and `Skills`
+# ZK (Zero-Knowledge) attestation for `Job Career History`
 
 ## Tech Stack
 
@@ -10,10 +10,13 @@
 
 ## Overview
 
-- This is the Zero-Knowledge (ZK) based job career history and skills attestation protocol, which enable a candidate to prove their job career history and skills without disclosing the sensitive informations.
+- In the Job matching market, a CV/Resume has histrically been used.
+  - However, due to lack of validation method for recruiters and staff of HR department in companies to validate the `Job Carreer History` (i.e. `Job Title` and `Skills`), which is written in CV/Resume, malicious candidates can write a **fake** `Job Carreer History` in their CV/Resume. This is the problem of the **fake** CV/Resume in Job matching market.
+  - This cause recruiters and staff of HR department in companies to misunderstand these malicious candidates, who submit a CV/Resume that includes fake `Job Carreer History`. In the worst case, these staff of HR department (or management team) in companies wrongly decide to hire these malicious candidates and this cause to mismatch and waste the cost and time to hire these malicious candidates.
 
-- This protocol is also useful for a recruiter and a company-hiring to prevent a malicious candidate from submitting a CV / Resume, which includes a "fake" career history (i.e. Job Title, etc) & "fake" skills, by using a generative AI. 
-
+- This is where the **ZK (Zero-Knowledge) attestation for Job Career History** comes in. 
+  - This protocol would be useful for recruiters and staff of HR department in companies to prevent malicious candidates from submitting their CV/Resume, which includes a **fake** Job Career History (i.e. `Job Title` and `Skills` etc).
+  - This protocol would also enable a candidate to prove their Job Career History without disclosing the sensitive informations by submitting extra evidences, which may includes some sensitive informations.
 
 <br>
 
@@ -22,6 +25,20 @@
 <br>
 
 ## Diagram of Userflow
+
+
+<br>
+
+## DEMO Video
+
+- DEMO Video link: 
+
+- What we can see in DEMO Video:
+  - 1/ Running the test of ZK circuit.
+  - 2/ Generating a ZK Proof.
+  - 3/ Compiling the Smart Contracts.
+  - 4/ Running the script of Smart Contracts on Local Network and `Pharos (Devnet)` respectively.
+
 
 
 <br>
@@ -83,12 +100,12 @@ cd script/utils/poseidon2-hash-generator
 npm i
 ```
 
-- Run the `Verify.s.sol` on the Local Network
+- Run the `Verify.s.sol` on the *Local Network*
 ```bash
 sh ./scripts/runningScript_Verify.sh
 ```
 
-- Run the `Verify_onPharosTestnet.s.sol` on Pharos (Devnet)
+- Run the `Verify_onPharosTestnet.s.sol` on `Pharos (Devnet)`
 ```bash
 sh ./scripts/pharos-testnet/runningScript_Verify_onPharosTestnet.sh
 ```
