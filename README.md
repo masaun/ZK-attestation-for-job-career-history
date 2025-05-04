@@ -2,7 +2,7 @@
 
 ## Tech Stack
 
-- `ZK circuit`: Implemented in [`Noir`](https://noir-lang.org/docs/) powered by [Aztec](https://aztec.network/)) 
+- `ZK circuit`: Implemented in [`Noir`](https://noir-lang.org/docs/) powered by [Aztec](https://aztec.network/)
 - Smart Contract: Implemented in Solidity (Framework: Foundry)
 - Blockchain: [`Pharos`](https://docs.pharosnetwork.xyz/developer-guides/pharos-devnet-onboarding-guide#rpc-endpoint) (Devnet)
 
@@ -31,7 +31,7 @@
 | Contract Name | Descripttion | Deployed-contract addresses on `Pharos` (Testnet) | Contract Source Code Verified |
 | ------------- |:------------:|:--------------------------------------------------:|:-----------------------------:|
 | UltraVerifier | The UltraPlonk Verifer contract (`./contracts/circuit/ultra-verifier/plonk_vk.sol`), which is generated based on ZK circuit in Noir (`./circuits/src/main.nr`). FYI: To generated this contract, the way of the [Noir's Solidity Verifier generation](https://noir-lang.org/docs/how_to/how-to-solidity-verifier) was used. | [0x2317106a73E00fc66AB25aD50979CFf140075b2b](https://pharosscan.xyz/address/0x2317106a73E00fc66AB25aD50979CFf140075b2b) | Yet |
-| InsuranceClaimProofVerifier | The InsuranceClaimProofVerifier contract, which the validation using the UltraVerifier contract is implemented | [0x7a2E68d1d1bB79dBc945801A02Bd6e17d0842457](https://pharosscan.xyz/address/0x7a2E68d1d1bB79dBc945801A02Bd6e17d0842457) | Yet |
+| JobTitlesAndSkillsProofVerifier | The JobTitlesAndSkillsProofVerifier contract, which the validation using the UltraVerifier contract is implemented | [0x7a2E68d1d1bB79dBc945801A02Bd6e17d0842457](https://pharosscan.xyz/address/0x7a2E68d1d1bB79dBc945801A02Bd6e17d0842457) | Yet |
 
 <br>
 
@@ -120,30 +120,7 @@ sh ./test/pharos-testnet/circuit/runningTest_JobTitlesAndSkillsProofVerifier_onP
 sh ./scripts/pharos-testnet/deployment/deploymentScript_AllContracts.sh
 ```
 
-
 <br>
-
-## Utils
-
-### Hashing with Poseidon2 Hash (Async)
-- Run the `poseidon2HashGeneratorWithAsync.ts`
-```bash
-sh scripts/utils/poseidon2-hash-generator/usages/async/runningScript_poseidon2HashGeneratorWithAsync.sh
-```
-↓
-- By running the script above, an `output.json` file like below would be exported and saved to the `script/utils/poseidon2-hash-generator/usages/async/output` directory:
-```json
-{
-  "hash": "17581986279560538761428021143884026167649881764772625124550680138044361406562",
-  "nullifier": "0x26df0d347e961cb94e1cc6d2ad8558696de8c1964b30e26f2ec8b926cbbbf862",
-  "nftMetadataCidHash": "0x0c863c512eaa011ffa5d0f8b8cfe26c5dfa6c0e102a4594a3e40af8f68d86dd0",
-  "merkleRoot": "0x215597bacd9c7e977dfc170f320074155de974be494579d2586e5b268fa3b629"
-}
-```
-(NOTE: To generate a **Poseidon Hash** (`hash`), the [`@zkpassport/poseidon2`](https://github.com/zkpassport/poseidon2/tree/main) library would be used)
-
-<br>
-
 
 ## References
 
