@@ -25,24 +25,26 @@
 
 ## Userflow
 
+- 1/ A candidate would send the **input data**, which includes Job Career History data (icl. `Job Title` and `Skills`) to the **ZK circuit**-written in `Noir`.
+- 2/ A new **ZK (Zero-Knowledge) Proof** would be generated via **ZK circuit** and then the candidate would receive it /w **public inputs** (by downloading them in the form of a plain text file).
+   - NOTE: This *public inputs* would includes only data, which can be disclosed as a public data. (The sensitive data is **not** included)
+- 3/ The candidate would call the `submitJobCareerHistoryProof()` in the `JobMatchingPlatform.sol` with a `ZK Proof` of Job Career History and `public inputs`.
+- 4/ The `JobMatchingPlatform.sol` would call the `verify()` in the `UltraVerifier.sol` via the `verifyJobTitlesAndSkillsProofVerifier()` in the `JobTitlesAndSkillsProofVerifier.sol` in order to validate whether or not a given `ZK Proof` of Job Career History is a valid proof.
+  - Then, the `verify()` in the `UltraVerifier.sol` would return the result of validation to the `JobMatchingPlatform.sol` via the `verifyJobTitlesAndSkillsProofVerifier()` in the `JobTitlesAndSkillsProofVerifier.sol`.
+
+- 5/ If the result (return value) of ZK proof (icl. public inputs) validation from the step 4/ above would be `true`, the ZK Proof of Job Career History-submitted by the candidate will be saved in the `JobMatchingPlatform.sol`.
+
+- 6/ A recruiter or HR staff of company would send a job offer to the candidate based on that the ZK Proof of Job Career History-submitted by the candidate has already been saved in the `JobMatchingPlatform.sol`.
+
 <br>
 
-## Diagram of Userflow
+## Diagram of Architecture (Userflow)
 
+- Diagram of Architecture (Userflow): https://github.com/masaun/ZK-attestation-for-job-career-history/blob/main/doc/diagram/diagram_ZK-attestation-for-job-career-history.jpg
 
-<br>
-
-## DEMO Video
-
-- DEMO Video link: 
-
-- What we can see in DEMO Video:
-  - 1/ Running the test of ZK circuit.
-  - 2/ Generating a ZK Proof.
-  - 3/ Compiling the Smart Contracts.
-  - 4/ Running the script of Smart Contracts on Local Network and `Pharos (Devnet)` respectively.
-
-
+- NOTE: 
+  - The `JobMatchingPlatform.sol` (icl. `submitJobCareerHistoryProof()`) in the diagram above is an example smart contract. (Not implemented yet)
+  - Any project, which hope to integrate the `JobTitlesAndSkillsProofVerifier.sol`, can freely implement an **custom contract** like `JobMatchingPlatform.sol` in the diagram above that handle a insurance payout
 
 <br>
 
