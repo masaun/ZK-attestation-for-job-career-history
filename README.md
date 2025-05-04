@@ -17,6 +17,7 @@
 - This is where the **ZK (Zero-Knowledge) attestation for Job Career History** comes in. 
   - This protocol would be useful for recruiters and staff of HR department in companies to prevent malicious candidates from submitting their CV/Resume, which includes a **fake** Job Career History (i.e. `Job Title` and `Skills` etc).
   - This protocol would also enable a candidate to prove their Job Career History without disclosing the sensitive informations by submitting extra evidences, which may includes some sensitive informations.
+  - As we mentioned above, at the moment, this protocol would particulary focus on `Job Title` and `Skills` in the `Job Career History`. And therefore, the ZK circuit of this protocol will generate a ZK Proof, which prove `Job Title` and `Skills` as a proof of `Job Career History`.
 
 <br>
 
@@ -75,7 +76,10 @@ Install [noirup](https://noir-lang.org/docs/getting_started/noir_installation) w
 curl -L https://foundry.paradigm.xyz | bash
 ```
 
-4. Install foundry dependencies by running `forge install 0xnonso/foundry-noir-helper --no-commit`.
+4. Install foundry dependencies
+```bash
+forge install 0xnonso/foundry-noir-helper --no-commit
+```
 
 5. Install `bbup`, the tool for managing Barretenberg versions, by following the instructions
    [here](https://github.com/AztecProtocol/aztec-packages/blob/master/barretenberg/bbup/README.md#installation).
@@ -84,8 +88,19 @@ curl -L https://foundry.paradigm.xyz | bash
 
 <br>
 
+## Set the environment file (`env`)
+
+- Create the `env` file:
+  - Then, please add a `<Private Key>` of your wallet address to the `"PHAROS_TESTNET_PRIVATE_KEY"` in the `.env`.
+```bash
+cp .env.example .env
+```
+
+<br>
+
 ## ZK circuit - Test
 
+- Run the test of the ZK circuit (`./circuits/src/tests/mod.nr`) via the `./circuits/circuit_test.sh`:
 ```bash
 cd circuits
 sh circuit_test.sh
@@ -93,7 +108,32 @@ sh circuit_test.sh
 
 <br>
 
-## SC - Script
+## ZK circuit - Generate a ZKP (Zero-Knowledge Proof)
+
+- Create the `Prover.toml` by copying the `Prover.example.toml`. Then, appropreate values should be stored into there.
+```bash
+cd circuits
+cp Prover.example.toml Prover.toml
+```
+
+- Run the ZK circuit (`./circuits/src/main.nr`) via the `./circuits/build.sh` to generate a ZKP (Zero-Knowledge Proof), which is called a `job_titles_and_skills_proof` proof:
+```bash
+cd circuits
+sh build.sh
+```
+
+<br>
+
+## Smart Contract - Compile
+- Compile the smart contracts:
+```bash
+sh buildContract.sh
+```
+
+<br>
+
+## Smart Contract - Script
+
 - Install `npm` modules - if it's first time to run this script. (From the second time, this installation step can be skipped):
 ```bash
 cd script/utils/poseidon2-hash-generator
@@ -117,7 +157,7 @@ sh ./scripts/pharos-testnet/runningScript_Verify_onPharosTestnet.sh
 
 <br>
 
-## SC - Test
+## Smart Contract - Test
 - Run the `JobTitlesAndSkillsProofVerifier.t.sol` on Local Network
 ```bash
 sh ./test/circuit/runningTest_JobTitlesAndSkillsProofVerifier.sh
@@ -132,7 +172,7 @@ sh ./test/pharos-testnet/circuit/runningTest_JobTitlesAndSkillsProofVerifier_onP
 <br>
 
 ## Deployment
-- Run the `DeploymentAllContracts.s.sol`
+- Run the `DeploymentAllContracts.s.sol` to deploy the `UltraVerifier` contract and the `JobTitlesAndSkillsProofVerifier` contract on Pharos (Devnet):
 ```bash
 sh ./scripts/pharos-testnet/deployment/deploymentScript_AllContracts.sh
 ```
@@ -153,3 +193,8 @@ sh ./scripts/pharos-testnet/deployment/deploymentScript_AllContracts.sh
   - Block Explorer (BlockScout) on Pharos Testnet: https://pharosscan.xyz/  
   - Fancet - To obtain Testnet ETH to pay for gas ⛽️ on Pharos Testnet (Devnet) 
     https://www.hackquest.io/faucets/50002
+
+<br>
+
+- Node.js:  
+  - How to run a Typescript (Node.js) file in shell script: https://nodejs.org/en/learn/typescript/run#running-typescript-with-a-runner
