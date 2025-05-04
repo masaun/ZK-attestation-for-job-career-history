@@ -106,7 +106,7 @@ mod tests {
         // Constraint check
         assert(revealed_data.nullifier == _nullifier, "Invalid nullifier");
 
-        println("The test of the test_nft_metadata_verifier()) has been successful");
+        println("The test of the test_job_titles_and_skills_verifier() has been successful");
     }
 
 }
