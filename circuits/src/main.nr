@@ -1,12 +1,13 @@
 mod tests;      // tests/mod.nr
 mod data_types; // data_types.nr
+mod merkle_tree; // merkle_tree_generator.nr
 mod utils;      // utils.nr -> utils/convert_cid_to_poseidon_hash.nr -> convert_nft_metadata_cid_to_poseidon_hash()
 
 use std::hash::poseidon2;
 use std::hash::pedersen_hash;
-use std::merkle::compute_merkle_root;
+//use std::merkle::compute_merkle_root;
 
-use utils::merkle_tree_generator::generate_merkle_tree_with_depth_1; // @dev - generate_merkle_tree_with_depth_1() function
+use merkle_tree::merkle_tree_generator::generate_merkle_tree_with_depth_1; // @dev - generate_merkle_tree_with_depth_1() function
 use data_types::{ JobCareerAndSkillData, RevealedData };             // @dev - JobCareerAndSkillData, RevealedData struct
 
 
