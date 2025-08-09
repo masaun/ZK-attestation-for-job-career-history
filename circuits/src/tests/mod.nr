@@ -3,10 +3,10 @@ mod test_inputs; // test_inputs.nr
 mod tests {
     use crate::main;                   // src/main.nr
     use crate::data_types::{ JobCareerAndSkillData, RevealedData };  // src/data_types.nr
-    use crate::utils::merkle_tree_generator::generate_merkle_tree_with_depth_1; // @dev - generate_merkle_tree_with_depth_1() function                 // src/utils.nr -> utils/convert_cid_to_poseidon_hash.nr -> convert_nft_metadata_cid_to_poseidon_hash()
+    use crate::merkle_tree::merkle_tree_generator::generate_merkle_tree_with_depth_1; // @dev - generate_merkle_tree_with_depth_1() function                 // src/utils.nr -> utils/convert_cid_to_poseidon_hash.nr -> convert_nft_metadata_cid_to_poseidon_hash()
     use std::hash::poseidon2;
     use std::hash::pedersen_hash;
-    use std::merkle::compute_merkle_root;
+    //use std::merkle::compute_merkle_root;
 
 
     #[test]
