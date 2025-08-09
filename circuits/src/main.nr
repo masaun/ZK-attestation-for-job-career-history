@@ -24,6 +24,9 @@ fn main(
     secret: Field,                                                // [TODO]: To be removed
     nullifier: Field,
     job_career_and_skill_data: JobCareerAndSkillData
+
+    // @dev - [TODO]: Extract a "domain" by using "zkEmail".
+    // @dev - [TODO]: Create a "domain tree" by using the "Semaphore v4".
 ) -> pub RevealedData {
 
     // Ensure leaf encodes job title and skills
