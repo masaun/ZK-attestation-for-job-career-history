@@ -23,7 +23,7 @@ fn main(
     //index: Field,
     secret: Field,                                                // [TODO]: To be removed
     nullifier: Field,
-    job_career_and_skill_data: JobCareerAndSkillData
+    job_career_and_skill_data: JobCareerAndSkillData // @dev - [TODO]: Skill data, which has recommendations, may be able to be extracted from LinkedIn via zkTLS.
 
     // @dev - [TODO]: Extract a "domain" by using "zkEmail".
     // @dev - [TODO]: Create a "domain tree" by using the "Semaphore v4".
